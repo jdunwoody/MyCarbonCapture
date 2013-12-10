@@ -15,27 +15,30 @@
 @property (nonatomic) unsigned numCells;
 @property (nonatomic, strong) NSTimer *webCheckTimer;
 @property (nonatomic) long currWebUsage;
+@property (nonatomic) int currentTreeGrowth;
 
 @end
 
 @implementation DJTreeTileCVController
 
 static NSString *CellIdentifier = @"CellIdentifier";
+static NSString * CURRENT_TREE_PROGRESS_KEY = @"CurrentTreeProgress";
+
 /* Each tree is worth 5GB of data
  To work out the difference for each .1 alpha step on each tile
  5*1024*1024 = 5242880 kb / 56 tiles / 100 for each alpha step = 936 kilobytes
  */
 static int ANIMATION_STEP_THRESHOLD = 936;
 
-
 -(id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:[[DJLeavesCollectionViewLayout alloc] init]];
   if (self) {
+    [[NSUserDefaults standardUserDefaults] setInteger:400 forKey:CURRENT_TREE_PROGRESS_KEY];
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.numCells = 60;
     _incompletCells = [NSMutableArray array];
-    for (unsigned i = 0; i<self.numCells; i++)
+    for (unsigned i = 0; i < self.numCells; i++)
       [_incompletCells addObject:@(i)];
   }
   return self;
@@ -58,12 +61,17 @@ static int ANIMATION_STEP_THRESHOLD = 936;
   // NSLog(@"the data is %lld Bytes",([DJWifiUsageModel getDataCounters]));
   [DJWifiUsageModel sharedInstance];
   NSLog(@"the previous web usage was %ld",self.currWebUsage);
+
+  //Bring the tree up to it's previous stage of growth after a restart
+  //[self restoreTree];
+   [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(restoreTree) userInfo:nil repeats:NO]; // Schedule Restore until after the the view has been all loaded
   self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
   [self.webCheckTimer fire];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
   [self.webCheckTimer invalidate];
+  [[NSUserDefaults standardUserDefaults] setInteger:self.currentTreeGrowth forKey:CURRENT_TREE_PROGRESS_KEY];
   [[DJWifiUsageModel sharedInstance] persistWebUsage];
 }
 
@@ -74,11 +82,22 @@ static int ANIMATION_STEP_THRESHOLD = 936;
   if(newWebUsage - self.currWebUsage > ANIMATION_STEP_THRESHOLD){
     //if(YES){ //this is a short cut for the demo
     self.currWebUsage = newWebUsage;
-    [self incrementTree];
+    [self incrementWebUsage];
   }
 }
 
--(void)incrementTree {
+-(void)incrementWebUsage {
+  [self growTreeWithProgressBlock:^{
+    [self.delegate didIncreaseUsageStats:self.currWebUsage];
+
+  } completionBlock:^{
+    NSLog(@"this is the end ");
+    [self.webCheckTimer invalidate];
+    [[DJWifiUsageModel sharedInstance] persistWebUsage];
+  } ];
+}
+
+-(void)growTreeWithProgressBlock:(void(^)(void))progress completionBlock:(void(^)(void))completion {
   if (self.incompletCells.lastObject) {
     unsigned randNumber = arc4random_uniform([self.incompletCells count]);
     // NSLog(@"the cell is %d with count left %d",randNumber, [self.incompletCells count]);
@@ -88,21 +107,27 @@ static int ANIMATION_STEP_THRESHOLD = 936;
                                                                    inSection:0]];
     if (attr.alpha >= 1) {
       [self.incompletCells removeObjectAtIndex:randNumber];
-      [self incrementTree];
+      [self incrementWebUsage];
     } else {
       attr.alpha +=.01;
       //NSLog(@"the count left is %d",self.incompletCells.count);
-      [self.delegate didIncreaseUsageStats:self.currWebUsage];
+      if (progress)progress();
     }
   } else {
-    NSLog(@"this is the end ");
-    [self.webCheckTimer invalidate];
-    [[DJWifiUsageModel sharedInstance] persistWebUsage];
+    if (completion)completion();
+  }
+}
 
+-(void)restoreTree {
+  self.currentTreeGrowth = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_TREE_PROGRESS_KEY];
+  for (unsigned i = 1; i < self.currentTreeGrowth; i++) {
+    [self growTreeWithProgressBlock:nil completionBlock:nil];
   }
 }
 
 #pragma mark - UICollectionview methods
+
+
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
   return self.numCells;

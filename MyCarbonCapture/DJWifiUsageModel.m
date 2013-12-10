@@ -15,11 +15,14 @@
 
 
 @interface DJWifiUsageModel ()
-@property (nonatomic) long currentWebUsage;
+@property (nonatomic,strong) NSNumber *currentWebUsage;
+@property (nonatomic,strong) NSNumber *lastResetNetworkCount;
 @end
 
 @implementation DJWifiUsageModel
-static NSString * WIFI_KEY = @"WifiUsage";
+static NSString * RESET_NETWORK_KEY = @"reset_WifiUsage";
+static NSString * NETWORK_KEY = @"WifiUsage";
+
 
 //  This info was provided from the Android code for WithOneSeed:
 // - 43.3kWh/GB, 840.5 CO2g/kWH = 36393.65 CO2g/GB
@@ -29,18 +32,36 @@ static double CO2G_PER_KWH = 840.5;
 static double DOLLAR_COST_CO2_PER_TON = 23;
 
 +(id)sharedInstance {
-  static DJWifiUsageModel * sharedInstance = nil;
+  static DJWifiUsageModel * si = nil;
   static dispatch_once_t onceToken = 0;
   dispatch_once(&onceToken, ^{
-    sharedInstance = [[DJWifiUsageModel alloc] init];
-    sharedInstance.currentWebUsage = [[NSUserDefaults standardUserDefaults] integerForKey:WIFI_KEY];
-    NSLog(@"The saved usage was %d",[[NSUserDefaults standardUserDefaults] integerForKey:WIFI_KEY]);
+    si = [[DJWifiUsageModel alloc] init];
+    si.currentWebUsage = [[NSUserDefaults standardUserDefaults] valueForKey:NETWORK_KEY];
+    long netNow = si.networkUsageKB;
 
-    NSLog(@"Dollars cost Per CO2g: $%f",sharedInstance.costPerCO2g);
-    NSLog(@"CO2 grams Per Byte: %f grams",sharedInstance.co2gPerByte);
-    NSLog(@"Dollars cost Per Gigabyte: $%f",sharedInstance.costPerKilobyte*1000*1000);
+    //Calibrate the app to the system current state
+    si.lastResetNetworkCount = [[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY];
+    if (!si.lastResetNetworkCount){
+      //first time use need to calibrate the app counter to work from this point
+      si.lastResetNetworkCount = @(netNow);
+    } else if (netNow < si.lastResetNetworkCount.longValue){
+      // The device has been restarted since last app run which has reset the ifConfig counters
+      // Therefore the Network Reference needs to be recalibrated.
+      // This means some accuracy may be lost between app runs.
+      // Set the 'reset' counter to 0 and calculate delta from there since there has been AT LEAST that much net usage between app runs.
+      si.lastResetNetworkCount = @0;
+    }
+    [[NSUserDefaults standardUserDefaults] setValue:si.lastResetNetworkCount forKey:RESET_NETWORK_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"the currect reset state (used for a reference in calculations): %@",[[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY]);
+
+    NSLog(@"The saved usage was %@",[[NSUserDefaults standardUserDefaults] valueForKey:NETWORK_KEY]);
+
+    NSLog(@"Dollars cost Per CO2g: $%f",si.costPerCO2g);
+    NSLog(@"CO2 grams Per Byte: %f grams",si.co2gPerByte);
+    NSLog(@"Dollars cost Per Gigabyte: $%f",si.costPerKilobyte*1000*1000);
   });
-  return sharedInstance;
+  return si;
 }
 
 #pragma mark - useful CO2 Units
@@ -61,7 +82,7 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
 }
 
 #pragma mark - get data usage
--(int)networkUsageKB {
+-(long)networkUsageKB {
   struct ifaddrs *addrs;
   const struct ifaddrs *addr_cursor;
   const struct if_data *networkStats;
@@ -83,7 +104,7 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
 }
 
 -(void)persistWebUsage {
-  [[NSUserDefaults standardUserDefaults] setInteger:[self networkUsageKB] forKey:WIFI_KEY];
+  [[NSUserDefaults standardUserDefaults] setValue:@([self networkUsageKB]) forKey:NETWORK_KEY];
 }
 
 -(void)refreshNetworkStats {
