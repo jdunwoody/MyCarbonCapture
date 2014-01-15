@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol DJTreeTileCVControllerDelegate <NSObject>
--(void)didIncreaseUsageStats:(long)kilobytes;
+-(void)didIncreaseUsageStats:(long long)kilobytes;
 -(void)didReachMaxStats;
 -(void)didResetStats;
 

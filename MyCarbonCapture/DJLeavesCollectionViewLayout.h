@@ -8,5 +8,8 @@
 #import <UIKit/UIKit.h>
 
 @interface DJLeavesCollectionViewLayout : UICollectionViewFlowLayout
+@property (nonatomic,strong) NSIndexPath *highlightledIndexPath;
+-(void) highlightAttributes:(UICollectionViewLayoutAttributes*) attr;
+-(void) unhighlightAttributes:(UICollectionViewLayoutAttributes*)attr;
 
 @end

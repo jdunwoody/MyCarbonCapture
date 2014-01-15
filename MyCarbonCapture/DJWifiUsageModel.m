@@ -82,7 +82,7 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
 }
 
 #pragma mark - get data usage
--(long)networkUsageKB {
+-(long long)networkUsageKB {
   struct ifaddrs *addrs;
   const struct ifaddrs *addr_cursor;
   const struct if_data *networkStats;

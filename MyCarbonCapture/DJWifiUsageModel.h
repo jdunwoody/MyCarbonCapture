@@ -19,5 +19,5 @@
 @property (nonatomic, readonly) double co2gPerByte;
 @property (nonatomic, readonly) double costPerCO2g;
 
-@property (nonatomic, readonly) long networkUsageKB;
+@property (nonatomic, readonly) long long networkUsageKB;
 @end

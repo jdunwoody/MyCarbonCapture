@@ -10,6 +10,8 @@
 @interface DJLeavesCollectionViewLayout ()
 @property (nonatomic,strong) UIDynamicAnimator * animator;
 @property (nonatomic) BOOL runBefore;
+@property (nonatomic,strong) UICollectionViewLayoutAttributes *resetAttrs;
+
 @end
 
 @implementation DJLeavesCollectionViewLayout
@@ -49,10 +51,23 @@
 }
 
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
-  return [self.animator itemsInRect:rect];
+  // NSLog(@"We got here:%@",[NSString stringWithCString:__PRETTY_FUNCTION__ encoding:NSASCIIStringEncoding]);
+  NSArray *attrs = [self.animator itemsInRect:rect];
+  [attrs enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes *attr, NSUInteger idx, BOOL *stop) {
+    if ([attr.indexPath isEqual:self.highlightledIndexPath]) {
+      [self highlightAttributes:attr];
+    }
+  }];
+  return attrs;
 }
 
 -(UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+  //NSLog(@"We got here:%@",[NSString stringWithCString:__PRETTY_FUNCTION__ encoding:NSASCIIStringEncoding]);
+  if ([indexPath isEqual:self.highlightledIndexPath]) {
+    UICollectionViewLayoutAttributes *attr = [self.animator layoutAttributesForCellAtIndexPath:indexPath];
+    [self highlightAttributes:attr];
+    return attr;
+  }
   return [self.animator layoutAttributesForCellAtIndexPath:indexPath];
 }
 
@@ -63,7 +78,7 @@
   CGFloat delta = newBounds.origin.y - scrollView.bounds.origin.y;
 
   CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
-  //Handleing the progressive affect of dragging for each cell that is further away from the pan touch point.
+  //Handling the progressive affect of dragging for each cell that is further away from the pan touch point.
   [self.animator.behaviors enumerateObjectsUsingBlock:^(UIAttachmentBehavior *springBehaviour, NSUInteger idx, BOOL *stop) {
     CGFloat yDistFromTouch = fabsf(touchLocation.y - springBehaviour.anchorPoint.y);
     CGFloat xDistFromTouch = fabsf(touchLocation.x - springBehaviour.anchorPoint.x);
@@ -80,7 +95,25 @@
   }];
 
   return NO;
-  
+
+}
+
+-(void)highlightAttributes:(UICollectionViewLayoutAttributes*) attr {
+  if (!self.resetAttrs){
+    self.resetAttrs = [attr copy];
+  }
+  attr.alpha =1;
+  attr.transform3D = CATransform3DScale(attr.transform3D, 2.0, 2.0, 0);
+  attr.zIndex = INT32_MAX;
+  attr.transform = CGAffineTransformMakeScale(2, 2);
+}
+
+-(void)unhighlightAttributes:(UICollectionViewLayoutAttributes*)attr {
+  attr.alpha = self.resetAttrs.alpha;
+  attr.transform3D = self.resetAttrs.transform3D;
+  attr.zIndex = self.resetAttrs.zIndex;
+  attr.transform = CGAffineTransformMakeScale(1, 1);
+  self.resetAttrs = nil;
 }
 
 

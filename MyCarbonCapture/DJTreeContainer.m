@@ -83,9 +83,9 @@
 }
 
 #pragma mark - CollectionViewDelegates
--(void)didIncreaseUsageStats:(long)kilobytes {
+-(void)didIncreaseUsageStats:(long long)kilobytes {
   self.donateButton.alpha +=.01;
-  self.gasValueLabel.text = [NSString stringWithFormat:@"%ld kB",kilobytes];
+  self.gasValueLabel.text = [NSString stringWithFormat:@"%lld kB",kilobytes];
 }
 
 -(void)didReachMaxStats {
