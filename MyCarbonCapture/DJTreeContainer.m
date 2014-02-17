@@ -6,6 +6,7 @@
 //
 
 #import "DJTreeContainer.h"
+#import "DJForestViewController.h"
 
 @interface DJTreeContainer ()
 @property (nonatomic,strong) UIButton *donateButton;
@@ -16,9 +17,7 @@
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-
   return self;
-
 }
 
 -(void)viewDidLoad {
@@ -50,15 +49,28 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   UIImageView * scoreImageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#1"]];
-  UIImageView * scoreImageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#2"]];
-  UIImageView * scoreImageView3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#3"]];
-  UIImageView * scoreImageView4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#4"]];
-  UIImageView * scoreImageView5 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#5"]];
-
   [self.view addSubview:scoreImageView1];
+
+  UIImageView * scoreImageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#2"]];
+  [self.view addSubview:scoreImageView2];
+
+  UIImageView * scoreImageView3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#3"]];
   [self.view addSubview:scoreImageView3];
+
+  UIImageView * scoreImageView4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#4"]];
   [self.view addSubview:scoreImageView4];
+
+  UIImageView * scoreImageView5 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#5"]];
   [self.view addSubview:scoreImageView5];
+
+
+  UIButton *flipButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+
+  [flipButton addTarget:self
+                 action:@selector(showForest)
+       forControlEvents:UIControlEventTouchUpInside];
+
+  [self.view addSubview:flipButton];
 
   NSDictionary *viewsDict = @{@"collectionView": vc.view,
                               @"menuBar":self.topLayoutGuide,
@@ -69,7 +81,8 @@
                               @"scoreimage4":scoreImageView4,
                               @"scoreimage5":scoreImageView5,
                               @"gasLabel":gasLabel,
-                              @"gasValueLabel":_gasValueLabel
+                              @"gasValueLabel":_gasValueLabel,
+                              @"flipButton":flipButton
                               };
   [viewsDict.allValues enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
     view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -79,6 +92,9 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[gasLabel][gasValueLabel]->=0-[scoreimage1][scoreimage3][scoreimage4][scoreimage5]-10-|" options:NSLayoutFormatAlignAllCenterY metrics:0 views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[donateButton]-20-|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewsDict]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
+
 
 }
 
@@ -101,6 +117,16 @@
 -(void)donateNow {
   NSURL *donateURL = [NSURL URLWithString:@"http://withoneseed.org.au/donate"];
   [[UIApplication sharedApplication] openURL:donateURL];
+}
+
+#pragma mark - navigate to Forest
+
+-(void)showForest{
+  DJForestViewController * fViewController = [[DJForestViewController alloc] init];
+  fViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  [self presentViewController:fViewController animated:YES completion:^{
+    nil;
+  }];
 }
 
 @end

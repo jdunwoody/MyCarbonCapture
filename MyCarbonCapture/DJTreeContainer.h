@@ -10,5 +10,5 @@
 
 
 @interface DJTreeContainer : UIViewController <DJTreeTileCVControllerDelegate>
-
+@property (nonatomic,strong) NSManagedObjectContext *moc;
 @end

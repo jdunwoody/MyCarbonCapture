@@ -39,7 +39,7 @@ static int ANIMATION_STEP_THRESHOLD = 1; // should be 936;
     [[NSUserDefaults standardUserDefaults] setInteger:400 forKey:CURRENT_TREE_PROGRESS_KEY];
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.numCells = 56;
+    self.numCells = 60;
     _incompletCells = [NSMutableArray array];
     for (unsigned i = 0; i < self.numCells; i++)
       [_incompletCells addObject:@(i)];
@@ -116,7 +116,7 @@ static int ANIMATION_STEP_THRESHOLD = 1; // should be 936;
     }
     attr.alpha +=.06;
     [self.collectionView.collectionViewLayout invalidateLayout];
-    NSLog(@"the count left is %d",self.incompletCells.count);
+    //NSLog(@"the count left is %d",self.incompletCells.count);
     if (progress)progress();
 
   } else {

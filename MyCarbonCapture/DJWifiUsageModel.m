@@ -3,7 +3,7 @@
 //  MyCarbonCapture
 //
 //  Created by Dallas Johnson on 8/12/2013.
-//  Copyright (c) 2013 APDM. All rights reserved.
+//  Copyright (c) 2013 Dallas Johnson. All rights reserved.
 //
 
 #import "DJWifiUsageModel.h"

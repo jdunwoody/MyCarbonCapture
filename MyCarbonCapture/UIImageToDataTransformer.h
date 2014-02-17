@@ -1,0 +1,5 @@
+@interface UIImageToDataTransformer : NSValueTransformer {
+
+}
+
+@end

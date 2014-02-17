@@ -6,9 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DJCoredataStack.h"
+
 
 @interface DJAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) DJCoredataStack *coredataStack;
 
 @end
