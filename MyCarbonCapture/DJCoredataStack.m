@@ -58,12 +58,16 @@ static NSString * CARBON_CAPTURE_MODEL_FILE = @"CarbonCaptureModel";
                             NSInferMappingModelAutomaticallyOption : @YES};
 
   _persistentStoreCoordinator= [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-  if (![_persistentStoreCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:options error:&error]) {
+  // if (![_persistentStoreCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:options error:&error]) {
 
-  //  if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
     NSLog(@"the migrated error is %@",error.userInfo);
     abort();
   }
+
+  //Ensure the CoredataDB is encrypted
+  [[NSFileManager defaultManager] setAttributes:@{NSFileProtectionKey: NSFileProtectionComplete} ofItemAtPath:[storeURL path] error:&error];
+
   return _persistentStoreCoordinator;
 }
 

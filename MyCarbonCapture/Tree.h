@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * info;
-@property (nonatomic, retain) id image;
+@property (nonatomic, retain) UIImage* image;
 @property (nonatomic, retain) NSSet *location;
 @property (nonatomic, retain) Bank *bank;
 @property (nonatomic, retain) Growth *growth;

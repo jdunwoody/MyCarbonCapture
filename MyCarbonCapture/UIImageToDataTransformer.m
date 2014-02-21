@@ -16,7 +16,7 @@
 	return UIImagePNGRepresentation(value);
 }
 
--(id)reverseTransformedValue:(id)value {
+-(UIImage*)reverseTransformedValue:(id)value {
 	return [[UIImage alloc] initWithData:value];
 }
 

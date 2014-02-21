@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8EBFA57018B4ABC40075312B /* DJBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBFA56F18B4ABC40075312B /* DJBankViewController.m */; };
 		8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC278951853635C00FCB356 /* DJTreeContainer.m */; };
 		8EC278971853635C00FCB356 /* DJTreeContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC278951853635C00FCB356 /* DJTreeContainer.m */; };
 		8EC278A41854A02800FCB356 /* DJWifiUsageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC278A31854A02800FCB356 /* DJWifiUsageModel.m */; };
@@ -64,6 +65,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8EBFA56E18B4ABC40075312B /* DJBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBankViewController.h; sourceTree = "<group>"; };
+		8EBFA56F18B4ABC40075312B /* DJBankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJBankViewController.m; sourceTree = "<group>"; };
 		8EC278941853635C00FCB356 /* DJTreeContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJTreeContainer.h; sourceTree = "<group>"; };
 		8EC278951853635C00FCB356 /* DJTreeContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJTreeContainer.m; sourceTree = "<group>"; };
 		8EC278A21854A02800FCB356 /* DJWifiUsageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJWifiUsageModel.h; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 		8EE4D01C18AEE21700107DEC /* DJCoredataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCoredataStack.m; sourceTree = "<group>"; };
 		8EE4D02018AF257E00107DEC /* CarbonCaptureModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarbonCaptureModel.xcdatamodel; sourceTree = "<group>"; };
 		8EE4D02318AF259C00107DEC /* CarbonCaptureModel 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CarbonCaptureModel 1.xcdatamodel"; sourceTree = "<group>"; };
+		8EE74CD318B786A1008C9A78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		8EEC7E4A184A92C500D0F1C3 /* My Carbon Capture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Carbon Capture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEC7E4D184A92C500D0F1C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8EEC7E4F184A92C500D0F1C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -140,6 +144,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8EBFA55D18B24DAC0075312B /* Forest */ = {
+			isa = PBXGroup;
+			children = (
+				8EC71FBB18AF9AFD000061A4 /* DJForestViewController.h */,
+				8EC71FBC18AF9AFD000061A4 /* DJForestViewController.m */,
+				8EC71FC318AFA394000061A4 /* DJForestScene.h */,
+				8EC71FC418AFA394000061A4 /* DJForestScene.m */,
+				8EC7201418B03970000061A4 /* DJForestNode.h */,
+				8EC7201518B03970000061A4 /* DJForestNode.m */,
+			);
+			name = Forest;
+			sourceTree = "<group>";
+		};
+		8EBFA55E18B24DC70075312B /* Tree */ = {
+			isa = PBXGroup;
+			children = (
+				8EC278941853635C00FCB356 /* DJTreeContainer.h */,
+				8EC278951853635C00FCB356 /* DJTreeContainer.m */,
+				8EEC7E82184A952A00D0F1C3 /* DJTreeTileCVController.h */,
+				8EEC7E83184A952A00D0F1C3 /* DJTreeTileCVController.m */,
+				8EEC7E86184A975600D0F1C3 /* DJLeavesCollectionViewLayout.h */,
+				8EEC7E87184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m */,
+				8EBFA56E18B4ABC40075312B /* DJBankViewController.h */,
+				8EBFA56F18B4ABC40075312B /* DJBankViewController.m */,
+			);
+			name = Tree;
+			sourceTree = "<group>";
+		};
 		8EC71F7518AF8EC5000061A4 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +223,7 @@
 		8EEC7E4C184A92C500D0F1C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8EE74CD318B786A1008C9A78 /* Reveal.framework */,
 				8EC71FC718B01B73000061A4 /* SpriteKit.framework */,
 				8EC71F7218AF750A000061A4 /* CoreData.framework */,
 				8EEC7E4D184A92C500D0F1C3 /* Foundation.framework */,
@@ -208,18 +241,8 @@
 				8EEC7E5D184A92C500D0F1C3 /* DJAppDelegate.m */,
 				8EE4D01B18AEE21700107DEC /* DJCoredataStack.h */,
 				8EE4D01C18AEE21700107DEC /* DJCoredataStack.m */,
-				8EC278941853635C00FCB356 /* DJTreeContainer.h */,
-				8EC278951853635C00FCB356 /* DJTreeContainer.m */,
-				8EC71FBB18AF9AFD000061A4 /* DJForestViewController.h */,
-				8EC71FBC18AF9AFD000061A4 /* DJForestViewController.m */,
-				8EC71FC318AFA394000061A4 /* DJForestScene.h */,
-				8EC71FC418AFA394000061A4 /* DJForestScene.m */,
-				8EC7201418B03970000061A4 /* DJForestNode.h */,
-				8EC7201518B03970000061A4 /* DJForestNode.m */,
-				8EEC7E82184A952A00D0F1C3 /* DJTreeTileCVController.h */,
-				8EEC7E83184A952A00D0F1C3 /* DJTreeTileCVController.m */,
-				8EEC7E86184A975600D0F1C3 /* DJLeavesCollectionViewLayout.h */,
-				8EEC7E87184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m */,
+				8EBFA55E18B24DC70075312B /* Tree */,
+				8EBFA55D18B24DAC0075312B /* Forest */,
 				8EC278A21854A02800FCB356 /* DJWifiUsageModel.h */,
 				8EC278A31854A02800FCB356 /* DJWifiUsageModel.m */,
 				8EEC7E65184A92C500D0F1C3 /* Images.xcassets */,
@@ -364,6 +387,7 @@
 				8EC71F8C18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */,
 				8EC71FC518AFA394000061A4 /* DJForestScene.m in Sources */,
 				8EC71FBD18AF9AFD000061A4 /* DJForestViewController.m in Sources */,
+				8EBFA57018B4ABC40075312B /* DJBankViewController.m in Sources */,
 				8EEC7E5E184A92C500D0F1C3 /* DJAppDelegate.m in Sources */,
 				8EC7201618B03970000061A4 /* DJForestNode.m in Sources */,
 				8EE4D01D18AEE21700107DEC /* DJCoredataStack.m in Sources */,
@@ -506,9 +530,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/dallas/Documents/devStuff/_iosDev/My\\ Projects/MyCarbonCapture",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MyCarbonCapture/MyCarbonCapture-Prefix.pch";
 				INFOPLIST_FILE = "MyCarbonCapture/MyCarbonCapture-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Reveal,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -520,6 +553,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/dallas/Documents/devStuff/_iosDev/My\\ Projects/MyCarbonCapture",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MyCarbonCapture/MyCarbonCapture-Prefix.pch";
 				INFOPLIST_FILE = "MyCarbonCapture/MyCarbonCapture-Info.plist";

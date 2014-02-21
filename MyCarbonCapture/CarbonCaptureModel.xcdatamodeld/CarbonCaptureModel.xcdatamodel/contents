@@ -25,10 +25,10 @@
         <relationship name="location" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PlantedObject" inverseName="tree" inverseEntity="PlantedObject" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Tree" positionX="144" positionY="108" width="128" height="133"/>
         <element name="Bank" positionX="-63" positionY="126" width="128" height="58"/>
         <element name="Forest" positionX="-65" positionY="347" width="128" height="58"/>
-        <element name="PlantedObject" positionX="133" positionY="315" width="128" height="103"/>
         <element name="Growth" positionX="-63" positionY="225" width="128" height="73"/>
+        <element name="PlantedObject" positionX="133" positionY="315" width="128" height="103"/>
+        <element name="Tree" positionX="144" positionY="108" width="128" height="133"/>
     </elements>
 </model>
