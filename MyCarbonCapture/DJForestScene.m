@@ -8,6 +8,8 @@
 
 #import "DJForestScene.h"
 #import "DJForestNode.h"
+#import "Tree.h"
+#import "DJTreeStorageHelper.h"
 
 @interface DJForestScene ()
 -(void)createContents;
@@ -15,6 +17,8 @@
 @end
 
 @implementation DJForestScene
+static int FOREST_USAGE_IDENTIFIER = 2;
+
 
 -(void)didMoveToView:(SKView *)view{
   self.backgroundColor = [SKColor brownColor];
@@ -28,8 +32,17 @@
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  for (UITouch * touch in touches) {
+  //remove from the pending collection
+  NSError *error = nil;
+  NSFetchRequest *treeRequest = [[NSFetchRequest alloc] initWithEntityName:@"Tree"];
+  Tree * treeToPlant = [[self.moc executeFetchRequest:treeRequest error:&error] lastObject];
 
+  TreeStorage * storage = [DJTreeStorageHelper treestorageforType:TreeStorageUsageTypeForest inManagedObjectContext:self.moc];
+
+
+  treeToPlant.storage = storage;
+  //Add a tree to the touch point location
+  for (UITouch * touch in touches) {
     self.selectedNode = [DJForestNode spriteNodeWithImageNamed:@"MCC_BankTree#1"];
     [self addChild:self.selectedNode];
     self.selectedNode.isMoving = YES;

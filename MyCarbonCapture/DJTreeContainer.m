@@ -81,7 +81,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
     view.translatesAutoresizingMaskIntoConstraints = NO;
   }];
 
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[collectionView]-[gasValueLabel]-[bankView(43)][donateButton]-|" options:0 metrics:nil views:viewsDict]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[collectionView]-[gasValueLabel]-[bankView][donateButton]-|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[gasLabel][gasValueLabel]" options:NSLayoutFormatAlignAllCenterY metrics:0 views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bankView]-10-|" options:0 metrics:nil views:viewsDict]];
 

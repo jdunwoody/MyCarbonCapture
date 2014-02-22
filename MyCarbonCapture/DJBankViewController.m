@@ -9,6 +9,7 @@
 #import "DJBankViewController.h"
 #import "Tree.h"
 #import "TreeStorage.h"
+#import "DJTreeStorageHelper.h"
 
 @interface DJBankViewController ()
 @property(nonatomic,strong) NSFetchedResultsController * frc;
@@ -17,10 +18,8 @@
 @end
 
 @implementation DJBankViewController
-
 static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 static NSString *TREE_IDENTITY = @"Tree";
-static NSString *TREE_STORAGE = @"TreeStorage";
 
 
 
@@ -42,6 +41,13 @@ static NSString *TREE_STORAGE = @"TreeStorage";
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  self.view.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[selfView(48)]" options:0 metrics:nil views:@{@"selfView":self.view}]];
+
+
+}
+
+-(void)viewDidAppear:(BOOL)animated {
 }
 
 
@@ -59,10 +65,6 @@ static NSString *TREE_STORAGE = @"TreeStorage";
 }
 
 
--(void)viewDidAppear:(BOOL)animated {
-  NSLog(@"hehehe");
-}
-
 
 -(NSFetchedResultsController *)frc {
   if (_frc) {
@@ -70,18 +72,8 @@ static NSString *TREE_STORAGE = @"TreeStorage";
   }
 
   NSError * error = nil;
-  NSFetchRequest *treeStorageReq = [NSFetchRequest fetchRequestWithEntityName:TREE_STORAGE];
-  TreeStorage * treeStorage = [[self.moc executeFetchRequest:treeStorageReq error:nil] lastObject];
-  NSLog(@"The pre-existing treeStorage is: %@",treeStorage);
-
-  if (!treeStorage) {
-    treeStorage = [NSEntityDescription insertNewObjectForEntityForName:TREE_STORAGE inManagedObjectContext:self.moc];
-    [self seedTreesForTreeStorage:treeStorage];
-  }
-
-  [self.moc save:&error];
-
-  NSLog(@"The the MOC is %@",self.moc);
+  TreeStorage * treeStorage = [DJTreeStorageHelper treestorageforType:TreeStorageUsageTypeBank inManagedObjectContext:self.moc];
+  [self seedTreesForTreeStorage:treeStorage];
 
   NSFetchRequest * req = [NSFetchRequest fetchRequestWithEntityName:TREE_IDENTITY];
   // req.predicate = [NSPredicate predicateWithFormat:@"storage ==  %@",treeStorage.objectID];
@@ -110,15 +102,19 @@ static NSString *TREE_STORAGE = @"TreeStorage";
   NSError *error = nil;
   Tree * tree = nil;
   NSString *imgName = nil;
-  for (int i = 1; i <=5; i++) {
+  int x = 0;
+  while (x < 2) {
+    for (int i = 1; i <=5; i++) {
 
-    tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
-    imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",i];
-    NSLog(@"the image name is %@",imgName);
-    tree.image = [UIImage imageNamed:imgName];
-    tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
-    tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];
-    tree.storage = treeStorage;
+      tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
+      imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",i];
+      NSLog(@"the image name is %@",imgName);
+      tree.image = [UIImage imageNamed:imgName];
+      tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
+      tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];
+      tree.storage = treeStorage;
+    }
+    x++;
   }
   [self.moc save:&error];
   if (error)

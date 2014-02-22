@@ -10,10 +10,11 @@
     </entity>
     <entity name="TreeStorage" representedClassName="TreeStorage" syncable="YES">
         <attribute name="progress" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="useIdentifier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="tree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tree" inverseName="storage" inverseEntity="Tree" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TreeStorage" positionX="-99" positionY="153" width="128" height="73"/>
+        <element name="TreeStorage" positionX="-99" positionY="153" width="128" height="88"/>
         <element name="Tree" positionX="169" positionY="108" width="128" height="133"/>
     </elements>
 </model>

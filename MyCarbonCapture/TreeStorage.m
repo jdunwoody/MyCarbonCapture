@@ -13,6 +13,7 @@
 @implementation TreeStorage
 
 @dynamic progress;
+@dynamic useIdentifier;
 @dynamic tree;
 
 @end

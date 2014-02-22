@@ -9,5 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface DJForestScene : SKScene
+@property(nonatomic,strong) NSManagedObjectContext *moc;
 
 @end

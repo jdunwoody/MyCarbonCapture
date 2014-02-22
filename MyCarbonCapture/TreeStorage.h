@@ -14,6 +14,7 @@
 @interface TreeStorage : NSManagedObject
 
 @property (nonatomic) float progress;
+@property (nonatomic) int16_t useIdentifier;
 @property (nonatomic, retain) NSSet *tree;
 @end
 

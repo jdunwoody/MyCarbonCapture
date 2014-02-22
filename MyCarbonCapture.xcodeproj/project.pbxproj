@@ -26,10 +26,12 @@
 		8EE4D01E18AEE21700107DEC /* DJCoredataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01C18AEE21700107DEC /* DJCoredataStack.m */; };
 		8EE4D02118AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */; };
 		8EE4D02218AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */; };
-		8EE74CE718B799C8008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CE618B799C8008C9A78 /* Tree.m */; };
-		8EE74CE818B799C8008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CE618B799C8008C9A78 /* Tree.m */; };
-		8EE74CEB18B799C8008C9A78 /* TreeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CEA18B799C8008C9A78 /* TreeStorage.m */; };
-		8EE74CEC18B799C8008C9A78 /* TreeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CEA18B799C8008C9A78 /* TreeStorage.m */; };
+		8EE74CEF18B87CE6008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CEE18B87CE6008C9A78 /* Tree.m */; };
+		8EE74CF018B87CE6008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CEE18B87CE6008C9A78 /* Tree.m */; };
+		8EE74CF318B87CE7008C9A78 /* TreeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CF218B87CE7008C9A78 /* TreeStorage.m */; };
+		8EE74CF418B87CE7008C9A78 /* TreeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CF218B87CE7008C9A78 /* TreeStorage.m */; };
+		8EE74CF718B88169008C9A78 /* DJTreeStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CF618B88169008C9A78 /* DJTreeStorageHelper.m */; };
+		8EE74CF818B88169008C9A78 /* DJTreeStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CF618B88169008C9A78 /* DJTreeStorageHelper.m */; };
 		8EEC7E4E184A92C500D0F1C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E4D184A92C500D0F1C3 /* Foundation.framework */; };
 		8EEC7E50184A92C500D0F1C3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E4F184A92C500D0F1C3 /* CoreGraphics.framework */; };
 		8EEC7E52184A92C500D0F1C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E51184A92C500D0F1C3 /* UIKit.framework */; };
@@ -80,10 +82,12 @@
 		8EE4D02018AF257E00107DEC /* CarbonCaptureModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarbonCaptureModel.xcdatamodel; sourceTree = "<group>"; };
 		8EE4D02318AF259C00107DEC /* CarbonCaptureModel 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CarbonCaptureModel 1.xcdatamodel"; sourceTree = "<group>"; };
 		8EE74CD318B786A1008C9A78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
-		8EE74CE518B799C8008C9A78 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
-		8EE74CE618B799C8008C9A78 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
-		8EE74CE918B799C8008C9A78 /* TreeStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeStorage.h; sourceTree = "<group>"; };
-		8EE74CEA18B799C8008C9A78 /* TreeStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeStorage.m; sourceTree = "<group>"; };
+		8EE74CED18B87CE6008C9A78 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		8EE74CEE18B87CE6008C9A78 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
+		8EE74CF118B87CE7008C9A78 /* TreeStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeStorage.h; sourceTree = "<group>"; };
+		8EE74CF218B87CE7008C9A78 /* TreeStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeStorage.m; sourceTree = "<group>"; };
+		8EE74CF518B88169008C9A78 /* DJTreeStorageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJTreeStorageHelper.h; sourceTree = "<group>"; };
+		8EE74CF618B88169008C9A78 /* DJTreeStorageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJTreeStorageHelper.m; sourceTree = "<group>"; };
 		8EEC7E4A184A92C500D0F1C3 /* My Carbon Capture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Carbon Capture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEC7E4D184A92C500D0F1C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8EEC7E4F184A92C500D0F1C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -164,10 +168,10 @@
 			isa = PBXGroup;
 			children = (
 				8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */,
-				8EE74CE918B799C8008C9A78 /* TreeStorage.h */,
-				8EE74CEA18B799C8008C9A78 /* TreeStorage.m */,
-				8EE74CE518B799C8008C9A78 /* Tree.h */,
-				8EE74CE618B799C8008C9A78 /* Tree.m */,
+				8EE74CF118B87CE7008C9A78 /* TreeStorage.h */,
+				8EE74CF218B87CE7008C9A78 /* TreeStorage.m */,
+				8EE74CED18B87CE6008C9A78 /* Tree.h */,
+				8EE74CEE18B87CE6008C9A78 /* Tree.m */,
 			);
 			name = CoreData;
 			path = MyCarbonCapture;
@@ -223,6 +227,8 @@
 				8EEC7E5D184A92C500D0F1C3 /* DJAppDelegate.m */,
 				8EE4D01B18AEE21700107DEC /* DJCoredataStack.h */,
 				8EE4D01C18AEE21700107DEC /* DJCoredataStack.m */,
+				8EE74CF518B88169008C9A78 /* DJTreeStorageHelper.h */,
+				8EE74CF618B88169008C9A78 /* DJTreeStorageHelper.m */,
 				8EBFA55E18B24DC70075312B /* Tree */,
 				8EBFA55D18B24DAC0075312B /* Forest */,
 				8EC278A21854A02800FCB356 /* DJWifiUsageModel.h */,
@@ -364,20 +370,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EE74CE718B799C8008C9A78 /* Tree.m in Sources */,
+				8EE74CEF18B87CE6008C9A78 /* Tree.m in Sources */,
 				8EEC7E84184A952A00D0F1C3 /* DJTreeTileCVController.m in Sources */,
 				8EE4D02118AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */,
+				8EE74CF718B88169008C9A78 /* DJTreeStorageHelper.m in Sources */,
 				8EEC7E88184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m in Sources */,
 				8EC278A41854A02800FCB356 /* DJWifiUsageModel.m in Sources */,
 				8EC71F8C18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */,
 				8EC71FC518AFA394000061A4 /* DJForestScene.m in Sources */,
+				8EE74CF318B87CE7008C9A78 /* TreeStorage.m in Sources */,
 				8EC71FBD18AF9AFD000061A4 /* DJForestViewController.m in Sources */,
 				8EBFA57018B4ABC40075312B /* DJBankViewController.m in Sources */,
 				8EEC7E5E184A92C500D0F1C3 /* DJAppDelegate.m in Sources */,
 				8EC7201618B03970000061A4 /* DJForestNode.m in Sources */,
 				8EE4D01D18AEE21700107DEC /* DJCoredataStack.m in Sources */,
 				8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */,
-				8EE74CEB18B799C8008C9A78 /* TreeStorage.m in Sources */,
 				8EEC7E5A184A92C500D0F1C3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,18 +393,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EE74CE818B799C8008C9A78 /* Tree.m in Sources */,
+				8EE74CF018B87CE6008C9A78 /* Tree.m in Sources */,
 				8EC7201718B03970000061A4 /* DJForestNode.m in Sources */,
 				8EEC7E89184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m in Sources */,
+				8EE74CF818B88169008C9A78 /* DJTreeStorageHelper.m in Sources */,
 				8EC278971853635C00FCB356 /* DJTreeContainer.m in Sources */,
 				8EC278A51854A02800FCB356 /* DJWifiUsageModel.m in Sources */,
-				8EE74CEC18B799C8008C9A78 /* TreeStorage.m in Sources */,
 				8EC71FC618AFA394000061A4 /* DJForestScene.m in Sources */,
 				8EEC7E85184A952A00D0F1C3 /* DJTreeTileCVController.m in Sources */,
 				8EE4D01E18AEE21700107DEC /* DJCoredataStack.m in Sources */,
 				8EEC7E79184A92C500D0F1C3 /* MyCarbonCaptureTests.m in Sources */,
 				8EC71F8D18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */,
 				8EC71FBE18AF9AFD000061A4 /* DJForestViewController.m in Sources */,
+				8EE74CF418B87CE7008C9A78 /* TreeStorage.m in Sources */,
 				8EE4D02218AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
