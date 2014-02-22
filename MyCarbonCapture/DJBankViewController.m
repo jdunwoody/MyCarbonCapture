@@ -1,5 +1,5 @@
 //
-//  DJBankViewController.m
+//  DJtreeStorageViewController.m
 //  MyCarbonCapture
 //
 //  Created by Dallas Johnson on 19/02/2014.
@@ -7,8 +7,8 @@
 //
 
 #import "DJBankViewController.h"
-#import "Bank.h"
 #import "Tree.h"
+#import "TreeStorage.h"
 
 @interface DJBankViewController ()
 @property(nonatomic,strong) NSFetchedResultsController * frc;
@@ -19,6 +19,9 @@
 @implementation DJBankViewController
 
 static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
+static NSString *TREE_IDENTITY = @"Tree";
+static NSString *TREE_STORAGE = @"TreeStorage";
+
 
 
 -(id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -51,6 +54,7 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
   id <NSFetchedResultsSectionInfo> sectionInfo = [[self.frc sections] objectAtIndex:section];
+  NSLog(@"the count of kck is %d",[sectionInfo numberOfObjects]);
   return [sectionInfo numberOfObjects];
 }
 
@@ -66,24 +70,24 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
   }
 
   NSError * error = nil;
-  NSFetchRequest *bankReq = [NSFetchRequest fetchRequestWithEntityName:@"Bank"];
-  Bank * bank = [[self.moc executeFetchRequest:bankReq error:nil] lastObject];
-  NSLog(@"The pre-existing bank is: %@",bank);
+  NSFetchRequest *treeStorageReq = [NSFetchRequest fetchRequestWithEntityName:TREE_STORAGE];
+  TreeStorage * treeStorage = [[self.moc executeFetchRequest:treeStorageReq error:nil] lastObject];
+  NSLog(@"The pre-existing treeStorage is: %@",treeStorage);
 
-  if (!bank) {
-    bank = [NSEntityDescription insertNewObjectForEntityForName:@"Bank" inManagedObjectContext:self.moc];
-    [self seedTreesForBank:bank];
+  if (!treeStorage) {
+    treeStorage = [NSEntityDescription insertNewObjectForEntityForName:TREE_STORAGE inManagedObjectContext:self.moc];
+    [self seedTreesForTreeStorage:treeStorage];
   }
 
   [self.moc save:&error];
 
   NSLog(@"The the MOC is %@",self.moc);
 
-  NSFetchRequest * req = [NSFetchRequest fetchRequestWithEntityName:@"Tree"];
-  req.predicate = [NSPredicate predicateWithFormat:@"ANY bank ==  %@",bank.objectID];
+  NSFetchRequest * req = [NSFetchRequest fetchRequestWithEntityName:TREE_IDENTITY];
+  // req.predicate = [NSPredicate predicateWithFormat:@"storage ==  %@",treeStorage.objectID];
 
   if (error) {
-    NSLog(@"Error creating a new Bank and NSFetched Results Controller: %@",error);
+    NSLog(@"Error creating a new treeStorage and NSFetched Results Controller: %@",error);
   }
 
   req.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
@@ -102,17 +106,19 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
   return _frc;
 }
 
--(void)seedTreesForBank:(Bank*)bank {
+-(void)seedTreesForTreeStorage:(TreeStorage*)treeStorage {
   NSError *error = nil;
   Tree * tree = nil;
-
+  NSString *imgName = nil;
   for (int i = 1; i <=5; i++) {
 
-    tree = [NSEntityDescription insertNewObjectForEntityForName:@"Tree" inManagedObjectContext:self.moc];
-    tree.image = [UIImage imageNamed:[NSString stringWithFormat:@"MCC_BankTree#%d",i]];
+    tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
+    imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",i];
+    NSLog(@"the image name is %@",imgName);
+    tree.image = [UIImage imageNamed:imgName];
     tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
     tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];
-    tree.bank = bank;
+    tree.storage = treeStorage;
   }
   [self.moc save:&error];
   if (error)

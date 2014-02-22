@@ -15,16 +15,6 @@
 		8EC71F7418AF7575000061A4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC71F7218AF750A000061A4 /* CoreData.framework */; };
 		8EC71F8C18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71F8B18AF900E000061A4 /* UIImageToDataTransformer.m */; };
 		8EC71F8D18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71F8B18AF900E000061A4 /* UIImageToDataTransformer.m */; };
-		8EC71FA818AF90FA000061A4 /* Bank.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FA718AF90FA000061A4 /* Bank.m */; };
-		8EC71FA918AF90FA000061A4 /* Bank.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FA718AF90FA000061A4 /* Bank.m */; };
-		8EC71FAC18AF90FA000061A4 /* PlantedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FAB18AF90FA000061A4 /* PlantedObject.m */; };
-		8EC71FAD18AF90FA000061A4 /* PlantedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FAB18AF90FA000061A4 /* PlantedObject.m */; };
-		8EC71FB018AF90FA000061A4 /* Growth.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FAF18AF90FA000061A4 /* Growth.m */; };
-		8EC71FB118AF90FA000061A4 /* Growth.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FAF18AF90FA000061A4 /* Growth.m */; };
-		8EC71FB418AF90FA000061A4 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FB318AF90FA000061A4 /* Tree.m */; };
-		8EC71FB518AF90FA000061A4 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FB318AF90FA000061A4 /* Tree.m */; };
-		8EC71FB818AF90FA000061A4 /* Forest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FB718AF90FA000061A4 /* Forest.m */; };
-		8EC71FB918AF90FA000061A4 /* Forest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FB718AF90FA000061A4 /* Forest.m */; };
 		8EC71FBD18AF9AFD000061A4 /* DJForestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FBC18AF9AFD000061A4 /* DJForestViewController.m */; };
 		8EC71FBE18AF9AFD000061A4 /* DJForestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FBC18AF9AFD000061A4 /* DJForestViewController.m */; };
 		8EC71FC518AFA394000061A4 /* DJForestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC71FC418AFA394000061A4 /* DJForestScene.m */; };
@@ -36,6 +26,10 @@
 		8EE4D01E18AEE21700107DEC /* DJCoredataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01C18AEE21700107DEC /* DJCoredataStack.m */; };
 		8EE4D02118AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */; };
 		8EE4D02218AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */; };
+		8EE74CE718B799C8008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CE618B799C8008C9A78 /* Tree.m */; };
+		8EE74CE818B799C8008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CE618B799C8008C9A78 /* Tree.m */; };
+		8EE74CEB18B799C8008C9A78 /* TreeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CEA18B799C8008C9A78 /* TreeStorage.m */; };
+		8EE74CEC18B799C8008C9A78 /* TreeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74CEA18B799C8008C9A78 /* TreeStorage.m */; };
 		8EEC7E4E184A92C500D0F1C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E4D184A92C500D0F1C3 /* Foundation.framework */; };
 		8EEC7E50184A92C500D0F1C3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E4F184A92C500D0F1C3 /* CoreGraphics.framework */; };
 		8EEC7E52184A92C500D0F1C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E51184A92C500D0F1C3 /* UIKit.framework */; };
@@ -74,16 +68,6 @@
 		8EC71F7218AF750A000061A4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		8EC71F8A18AF900E000061A4 /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		8EC71F8B18AF900E000061A4 /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
-		8EC71FA618AF90FA000061A4 /* Bank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bank.h; sourceTree = "<group>"; };
-		8EC71FA718AF90FA000061A4 /* Bank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bank.m; sourceTree = "<group>"; };
-		8EC71FAA18AF90FA000061A4 /* PlantedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlantedObject.h; sourceTree = "<group>"; };
-		8EC71FAB18AF90FA000061A4 /* PlantedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlantedObject.m; sourceTree = "<group>"; };
-		8EC71FAE18AF90FA000061A4 /* Growth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Growth.h; sourceTree = "<group>"; };
-		8EC71FAF18AF90FA000061A4 /* Growth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Growth.m; sourceTree = "<group>"; };
-		8EC71FB218AF90FA000061A4 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
-		8EC71FB318AF90FA000061A4 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
-		8EC71FB618AF90FA000061A4 /* Forest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Forest.h; sourceTree = "<group>"; };
-		8EC71FB718AF90FA000061A4 /* Forest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Forest.m; sourceTree = "<group>"; };
 		8EC71FBB18AF9AFD000061A4 /* DJForestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJForestViewController.h; sourceTree = "<group>"; };
 		8EC71FBC18AF9AFD000061A4 /* DJForestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJForestViewController.m; sourceTree = "<group>"; };
 		8EC71FC318AFA394000061A4 /* DJForestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJForestScene.h; sourceTree = "<group>"; };
@@ -96,6 +80,10 @@
 		8EE4D02018AF257E00107DEC /* CarbonCaptureModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarbonCaptureModel.xcdatamodel; sourceTree = "<group>"; };
 		8EE4D02318AF259C00107DEC /* CarbonCaptureModel 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CarbonCaptureModel 1.xcdatamodel"; sourceTree = "<group>"; };
 		8EE74CD318B786A1008C9A78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		8EE74CE518B799C8008C9A78 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		8EE74CE618B799C8008C9A78 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
+		8EE74CE918B799C8008C9A78 /* TreeStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeStorage.h; sourceTree = "<group>"; };
+		8EE74CEA18B799C8008C9A78 /* TreeStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeStorage.m; sourceTree = "<group>"; };
 		8EEC7E4A184A92C500D0F1C3 /* My Carbon Capture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Carbon Capture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEC7E4D184A92C500D0F1C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8EEC7E4F184A92C500D0F1C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -176,16 +164,10 @@
 			isa = PBXGroup;
 			children = (
 				8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */,
-				8EC71FA618AF90FA000061A4 /* Bank.h */,
-				8EC71FA718AF90FA000061A4 /* Bank.m */,
-				8EC71FAA18AF90FA000061A4 /* PlantedObject.h */,
-				8EC71FAB18AF90FA000061A4 /* PlantedObject.m */,
-				8EC71FAE18AF90FA000061A4 /* Growth.h */,
-				8EC71FAF18AF90FA000061A4 /* Growth.m */,
-				8EC71FB218AF90FA000061A4 /* Tree.h */,
-				8EC71FB318AF90FA000061A4 /* Tree.m */,
-				8EC71FB618AF90FA000061A4 /* Forest.h */,
-				8EC71FB718AF90FA000061A4 /* Forest.m */,
+				8EE74CE918B799C8008C9A78 /* TreeStorage.h */,
+				8EE74CEA18B799C8008C9A78 /* TreeStorage.m */,
+				8EE74CE518B799C8008C9A78 /* Tree.h */,
+				8EE74CE618B799C8008C9A78 /* Tree.m */,
 			);
 			name = CoreData;
 			path = MyCarbonCapture;
@@ -330,6 +312,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Dallas Johnson";
 				TargetAttributes = {
+					8EEC7E49184A92C500D0F1C3 = {
+						DevelopmentTeam = CT4HAP86SY;
+					};
 					8EEC7E6A184A92C500D0F1C3 = {
 						TestTargetID = 8EEC7E49184A92C500D0F1C3;
 					};
@@ -379,10 +364,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EE74CE718B799C8008C9A78 /* Tree.m in Sources */,
 				8EEC7E84184A952A00D0F1C3 /* DJTreeTileCVController.m in Sources */,
 				8EE4D02118AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */,
 				8EEC7E88184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m in Sources */,
-				8EC71FAC18AF90FA000061A4 /* PlantedObject.m in Sources */,
 				8EC278A41854A02800FCB356 /* DJWifiUsageModel.m in Sources */,
 				8EC71F8C18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */,
 				8EC71FC518AFA394000061A4 /* DJForestScene.m in Sources */,
@@ -391,12 +376,9 @@
 				8EEC7E5E184A92C500D0F1C3 /* DJAppDelegate.m in Sources */,
 				8EC7201618B03970000061A4 /* DJForestNode.m in Sources */,
 				8EE4D01D18AEE21700107DEC /* DJCoredataStack.m in Sources */,
-				8EC71FB818AF90FA000061A4 /* Forest.m in Sources */,
-				8EC71FB018AF90FA000061A4 /* Growth.m in Sources */,
-				8EC71FA818AF90FA000061A4 /* Bank.m in Sources */,
 				8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */,
+				8EE74CEB18B799C8008C9A78 /* TreeStorage.m in Sources */,
 				8EEC7E5A184A92C500D0F1C3 /* main.m in Sources */,
-				8EC71FB418AF90FA000061A4 /* Tree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,21 +386,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EE74CE818B799C8008C9A78 /* Tree.m in Sources */,
 				8EC7201718B03970000061A4 /* DJForestNode.m in Sources */,
-				8EC71FB518AF90FA000061A4 /* Tree.m in Sources */,
-				8EC71FA918AF90FA000061A4 /* Bank.m in Sources */,
 				8EEC7E89184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m in Sources */,
-				8EC71FB918AF90FA000061A4 /* Forest.m in Sources */,
 				8EC278971853635C00FCB356 /* DJTreeContainer.m in Sources */,
 				8EC278A51854A02800FCB356 /* DJWifiUsageModel.m in Sources */,
+				8EE74CEC18B799C8008C9A78 /* TreeStorage.m in Sources */,
 				8EC71FC618AFA394000061A4 /* DJForestScene.m in Sources */,
-				8EC71FAD18AF90FA000061A4 /* PlantedObject.m in Sources */,
 				8EEC7E85184A952A00D0F1C3 /* DJTreeTileCVController.m in Sources */,
 				8EE4D01E18AEE21700107DEC /* DJCoredataStack.m in Sources */,
 				8EEC7E79184A92C500D0F1C3 /* MyCarbonCaptureTests.m in Sources */,
 				8EC71F8D18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */,
 				8EC71FBE18AF9AFD000061A4 /* DJForestViewController.m in Sources */,
-				8EC71FB118AF90FA000061A4 /* Growth.m in Sources */,
 				8EE4D02218AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,6 +509,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/dallas/Documents/devStuff/_iosDev/My\\ Projects/MyCarbonCapture",
@@ -543,6 +524,7 @@
 					Reveal,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -553,6 +535,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/dallas/Documents/devStuff/_iosDev/My\\ Projects/MyCarbonCapture",
@@ -561,6 +545,7 @@
 				GCC_PREFIX_HEADER = "MyCarbonCapture/MyCarbonCapture-Prefix.pch";
 				INFOPLIST_FILE = "MyCarbonCapture/MyCarbonCapture-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

@@ -1,34 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Bank" representedClassName="Bank" syncable="YES">
-        <relationship name="trees" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Tree" inverseName="bank" inverseEntity="Tree" syncable="YES"/>
-    </entity>
-    <entity name="Forest" representedClassName="Forest" syncable="YES">
-        <relationship name="plantedObjects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PlantedObject" inverseName="forest" inverseEntity="PlantedObject" syncable="YES"/>
-    </entity>
-    <entity name="Growth" representedClassName="Growth" syncable="YES">
-        <attribute name="progress" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="tree" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tree" inverseName="growth" inverseEntity="Tree" syncable="YES"/>
-    </entity>
-    <entity name="PlantedObject" representedClassName="PlantedObject" syncable="YES">
-        <attribute name="x" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="y" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="forest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Forest" inverseName="plantedObjects" inverseEntity="Forest" syncable="YES"/>
-        <relationship name="tree" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tree" inverseName="location" inverseEntity="Tree" syncable="YES"/>
-    </entity>
     <entity name="Tree" representedClassName="Tree" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bank" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Bank" inverseName="trees" inverseEntity="Bank" syncable="YES"/>
-        <relationship name="growth" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Growth" inverseName="tree" inverseEntity="Growth" syncable="YES"/>
-        <relationship name="location" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PlantedObject" inverseName="tree" inverseEntity="PlantedObject" syncable="YES"/>
+        <attribute name="x" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="y" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="storage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TreeStorage" inverseName="tree" inverseEntity="TreeStorage" syncable="YES"/>
+    </entity>
+    <entity name="TreeStorage" representedClassName="TreeStorage" syncable="YES">
+        <attribute name="progress" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="tree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tree" inverseName="storage" inverseEntity="Tree" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Bank" positionX="-63" positionY="126" width="128" height="58"/>
-        <element name="Forest" positionX="-65" positionY="347" width="128" height="58"/>
-        <element name="Growth" positionX="-63" positionY="225" width="128" height="73"/>
-        <element name="PlantedObject" positionX="133" positionY="315" width="128" height="103"/>
-        <element name="Tree" positionX="144" positionY="108" width="128" height="133"/>
+        <element name="TreeStorage" positionX="-99" positionY="153" width="128" height="73"/>
+        <element name="Tree" positionX="169" positionY="108" width="128" height="133"/>
     </elements>
 </model>

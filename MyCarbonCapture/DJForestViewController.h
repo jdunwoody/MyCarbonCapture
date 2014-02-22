@@ -10,5 +10,6 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface DJForestViewController : UIViewController
+@property (nonatomic,strong) NSManagedObjectContext * moc;
 
 @end

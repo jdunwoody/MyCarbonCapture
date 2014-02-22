@@ -7,9 +7,7 @@
 
 #import "DJTreeContainer.h"
 #import "DJForestViewController.h"
-#import "Bank.h"
-#import "Tree.h"
-
+#import "TreeStorage.h"
 #import "DJBankViewController.h"
 
 @interface DJTreeContainer ()
@@ -20,10 +18,13 @@
 
 @implementation DJTreeContainer
 
+static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
+
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   return self;
 }
+
 
 -(void)viewDidLoad {
 
@@ -60,24 +61,6 @@
   [self addChildViewController:bankViewController];
   [self.view addSubview:bankViewController.view];
 
-
-  //
-  //  UIImageView * scoreImageView1 = [[UIImageView alloc] initWithImage:];
-  //  [self.view addSubview:scoreImageView1];
-  //
-  //  UIImageView * scoreImageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#2"]];
-  //  [self.view addSubview:scoreImageView2];
-  //
-  //  UIImageView * scoreImageView3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#3"]];
-  //  [self.view addSubview:scoreImageView3];
-  //
-  //  UIImageView * scoreImageView4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#4"]];
-  //  [self.view addSubview:scoreImageView4];
-  //
-  //  UIImageView * scoreImageView5 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCC_BankTree#5"]];
-  //  [self.view addSubview:scoreImageView5];
-
-
   UIButton *flipButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
 
   [flipButton addTarget:self
@@ -107,7 +90,6 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
 
-
 }
 
 #pragma mark - CollectionViewDelegates
@@ -127,7 +109,7 @@
 #pragma mark - Donate Now
 
 -(void)donateNow {
-  NSURL *donateURL = [NSURL URLWithString:@"http://withoneseed.org.au/donate"];
+  NSURL *donateURL = [NSURL URLWithString:WITH_ONE_SEED_URL];
   [[UIApplication sharedApplication] openURL:donateURL];
 }
 
@@ -135,6 +117,7 @@
 
 -(void)showForest{
   DJForestViewController * fViewController = [[DJForestViewController alloc] init];
+  fViewController.moc = self.moc;
   fViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
   [self presentViewController:fViewController animated:YES completion:^{
     nil;

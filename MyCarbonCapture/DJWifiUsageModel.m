@@ -37,7 +37,7 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
   dispatch_once(&onceToken, ^{
     si = [[DJWifiUsageModel alloc] init];
     si.currentWebUsage = [[NSUserDefaults standardUserDefaults] valueForKey:NETWORK_KEY];
-    long netNow = si.networkUsageKB;
+    long long netNow = si.networkUsageKB;
 
     //Calibrate the app to the system current state
     si.lastResetNetworkCount = [[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY];
