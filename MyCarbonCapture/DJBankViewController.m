@@ -7,12 +7,9 @@
 //
 
 #import "DJBankViewController.h"
-#import "Tree.h"
-#import "TreeStorage.h"
-#import "DJTreeStorageHelper.h"
+#import "Tree+_StorageType.h"
 
 @interface DJBankViewController ()
-@property(nonatomic,strong) NSFetchedResultsController * frc;
 
 
 @end
@@ -48,6 +45,7 @@ static NSString *TREE_IDENTITY = @"Tree";
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+
 }
 
 
@@ -72,11 +70,11 @@ static NSString *TREE_IDENTITY = @"Tree";
   }
 
   NSError * error = nil;
-  TreeStorage * treeStorage = [DJTreeStorageHelper treestorageforType:TreeStorageUsageTypeBank inManagedObjectContext:self.moc];
-  [self seedTreesForTreeStorage:treeStorage];
+
+  [self seedTrees];
 
   NSFetchRequest * req = [NSFetchRequest fetchRequestWithEntityName:TREE_IDENTITY];
-  // req.predicate = [NSPredicate predicateWithFormat:@"storage ==  %@",treeStorage.objectID];
+  req.predicate = [NSPredicate predicateWithFormat:@"useIdentifier ==  %d",TreeStorageUsageTypeBank];
 
   if (error) {
     NSLog(@"Error creating a new treeStorage and NSFetched Results Controller: %@",error);
@@ -98,27 +96,29 @@ static NSString *TREE_IDENTITY = @"Tree";
   return _frc;
 }
 
--(void)seedTreesForTreeStorage:(TreeStorage*)treeStorage {
+-(void)seedTrees {
   NSError *error = nil;
   Tree * tree = nil;
   NSString *imgName = nil;
-  int x = 0;
-  while (x < 2) {
-    for (int i = 1; i <=5; i++) {
+  for (int i = 1; i <=5; i++) {
 
-      tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
-      imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",i];
-      NSLog(@"the image name is %@",imgName);
-      tree.image = [UIImage imageNamed:imgName];
-      tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
-      tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];
-      tree.storage = treeStorage;
-    }
-    x++;
+    tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
+    imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",i];
+    tree.image = [UIImage imageNamed:imgName];
+    tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
+    tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];
+    tree.useIdentifier = TreeStorageUsageTypeBank;
   }
   [self.moc save:&error];
   if (error)
     NSLog(@"The found error is %@",error);
+}
+
+-(void)refreshBankViewCollection {
+  NSError * error = nil;
+  [self.frc performFetch:&error];
+  [self.collectionView reloadData];
+
 }
 
 @end

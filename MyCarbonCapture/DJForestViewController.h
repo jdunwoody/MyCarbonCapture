@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
+#import "DJForestScene.h"
 
-@interface DJForestViewController : UIViewController
+@class DJBankViewController;
+
+@interface DJForestViewController : UIViewController <DJForestControllerUpdateDelegate>
 @property (nonatomic,strong) NSManagedObjectContext * moc;
 
 @end

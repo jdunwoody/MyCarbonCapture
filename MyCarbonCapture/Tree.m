@@ -7,7 +7,6 @@
 //
 
 #import "Tree.h"
-#import "TreeStorage.h"
 
 
 @implementation Tree
@@ -17,6 +16,7 @@
 @dynamic name;
 @dynamic x;
 @dynamic y;
-@dynamic storage;
+@dynamic useIdentifier;
+@dynamic largeImage;
 
 @end

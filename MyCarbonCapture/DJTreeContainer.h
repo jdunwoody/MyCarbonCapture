@@ -8,6 +8,9 @@
 #import <UIKit/UIKit.h>
 #import "DJTreeTileCVController.h"
 
+@class DJBankViewController;
+@class DJThermometerView;
+
 
 @interface DJTreeContainer : UIViewController <DJTreeTileCVControllerDelegate>
 @property (nonatomic,strong) NSManagedObjectContext *moc;

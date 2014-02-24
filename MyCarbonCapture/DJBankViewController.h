@@ -10,5 +10,7 @@
 
 @interface DJBankViewController : UICollectionViewController <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic,strong) NSManagedObjectContext *moc;
+@property(nonatomic,strong) NSFetchedResultsController * frc;
 
+-(void)refreshBankViewCollection;
 @end

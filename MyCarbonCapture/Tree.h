@@ -9,15 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class TreeStorage;
 
 @interface Tree : NSManagedObject
 
-@property (nonatomic, retain) id image;
+@property (nonatomic, retain) UIImage* image;
 @property (nonatomic, retain) NSString * info;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic) float x;
 @property (nonatomic) float y;
-@property (nonatomic, retain) TreeStorage *storage;
+@property (nonatomic) int16_t useIdentifier;
+@property (nonatomic, retain) UIImage* largeImage;
 
 @end

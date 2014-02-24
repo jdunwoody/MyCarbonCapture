@@ -7,7 +7,11 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+@class Tree;
 
 @interface DJForestNode : SKSpriteNode
 @property (nonatomic) BOOL isMoving;
+@property (nonatomic,strong) Tree * tree;
++(instancetype)spriteNodeWithTree:(Tree*)tree;
+
 @end

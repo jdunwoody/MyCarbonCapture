@@ -7,6 +7,7 @@
 //
 
 #import "DJForestNode.h"
+#import "Tree+_StorageType.h"
 
 
 @implementation DJForestNode
@@ -16,9 +17,13 @@
   return [super spriteNodeWithImageNamed:name];
 }
 
++(instancetype)spriteNodeWithTree:(Tree*)tree{
+  DJForestNode* treeNode = [super spriteNodeWithTexture:[SKTexture textureWithImage:tree.image]];
+  treeNode.tree = tree;
+  return treeNode;
+}
 
 -(void)setPosition:(CGPoint)position {
-
   if (self.isMoving) {
 
     [self setZRotation:.1];
@@ -26,11 +31,19 @@
   } else {
     [self setZRotation:0];
     position = CGPointMake(position.x, position.y - LIFTING_OFFSET);
+    self.tree.x = position.x;
+    self.tree.y = position.y;
+    self.tree.useIdentifier = TreeStorageUsageTypeForest;
+    NSError * error = nil;
+
+    [self.tree.managedObjectContext save:&error];
   }
-  CGFloat perpectiveFactor = (1- position.y / self.parent.frame.size.height) + 1;
+  CGFloat frameHeight = self.parent.frame.size.height;
+  
+  CGFloat perspectiveFactor = (1 - ((position.y - frameHeight / 2) / frameHeight)*2);
   self.size = CGSizeApplyAffineTransform(CGSizeMake(25, 33),
-                                         CGAffineTransformMakeScale(perpectiveFactor,
-                                                                    perpectiveFactor));
+                                         CGAffineTransformMakeScale(perspectiveFactor,
+                                                                    perspectiveFactor));
 
   [super setPosition:position];
 }

@@ -12,17 +12,18 @@
 
 @interface DJForestViewController ()
 
+@property(nonatomic, strong) DJBankViewController *bankViewController;
 @end
 
 @implementation DJForestViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-      self.view = [[SKView alloc] initWithFrame:self.view.frame];
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.view = [[SKView alloc] initWithFrame:self.view.frame];
+  }
+  return self;
 }
 
 
@@ -31,6 +32,7 @@
 
   DJForestScene *forestScene = [[DJForestScene alloc] initWithSize:self.view.bounds.size];
   forestScene.moc = self.moc;
+  forestScene.delegate = self;
   [spriteView presentScene:forestScene];
 
   UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -41,13 +43,13 @@
   backButton.translatesAutoresizingMaskIntoConstraints = NO;
 
   //Add the bank view to display pending trees
-  DJBankViewController *bankViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
-  bankViewController.moc = self.moc;
-  bankViewController.view.backgroundColor = [UIColor redColor];
-  [self addChildViewController:bankViewController];
-  [self.view addSubview:bankViewController.view];
+  self.bankViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
+  self.bankViewController.moc = self.moc;
+  [self addChildViewController:self.bankViewController];
+  self.bankViewController.collectionView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:.5];
+  [self.view addSubview:self.bankViewController.view];
 
-  NSDictionary * viewsDict = @{@"backButton":backButton,@"bankView":bankViewController.view};
+  NSDictionary * viewsDict = @{@"backButton":backButton,@"bankView": self.bankViewController.view};
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bankView]-5-[backButton]-|" options:NSLayoutFormatAlignAllBottom metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[backButton]-|" options:0 metrics:nil views:viewsDict]];
 }
@@ -57,5 +59,13 @@
     nil;
   }];
 }
+
+#pragma mark  - Forest delegate
+
+- (void)forestDidUpdateTreeCollection {
+  [self.bankViewController refreshBankViewCollection];
+}
+
+
 
 @end
