@@ -14,6 +14,9 @@ typedef enum {
   TreeStorageUsageTypeForest
 } TreeStorageUsageType;
 
+static NSString *TREE_IDENTITY = @"Tree";
+
+
 
 @interface Tree (_StorageType)
 

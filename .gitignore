@@ -1,1 +1,4 @@
 *.xccheckout
+Pods
+contents.xcworkspacedata
+Podfile.lock

@@ -21,7 +21,7 @@
 
 @implementation DJWifiUsageModel
 static NSString * RESET_NETWORK_KEY = @"reset_WifiUsage";
-static NSString * NETWORK_KEY = @"WifiUsage";
+static NSString * CURRENT_NET_USAGE_KEY = @"WifiUsage";
 
 
 //  This info was provided from the Android code for WithOneSeed:
@@ -32,36 +32,42 @@ static double CO2G_PER_KWH = 840.5;
 static double DOLLAR_COST_CO2_PER_TON = 23;
 
 +(id)sharedInstance {
-  static DJWifiUsageModel * si = nil;
+  static DJWifiUsageModel * wifiModelInstance = nil;
   static dispatch_once_t onceToken = 0;
+
+  //The network count is reset to 0 each time the device is rebooted.
+  //In order to not reset a partly growing tree on reboot the highest count is saved in user defaults
+  // Then when the app starts if the current count is less than the saved count we know the device has been rebooted since the last run and it needs to be calibrated to continue counting instead of resetting the counter.
+
   dispatch_once(&onceToken, ^{
-    si = [[DJWifiUsageModel alloc] init];
-    si.currentWebUsage = [[NSUserDefaults standardUserDefaults] valueForKey:NETWORK_KEY];
-    long long netNow = si.networkUsageKB;
+    wifiModelInstance = [[DJWifiUsageModel alloc] init];
+    wifiModelInstance.currentWebUsage = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_NET_USAGE_KEY];
+    long long latestNetworkReading = wifiModelInstance.networkUsageKB;
 
     //Calibrate the app to the system current state
-    si.lastResetNetworkCount = [[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY];
-    if (!si.lastResetNetworkCount){
-      //first time use need to calibrate the app counter to work from this point
-      si.lastResetNetworkCount = @(netNow);
-    } else if (netNow < si.lastResetNetworkCount.longValue){
+    wifiModelInstance.lastResetNetworkCount = [[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY];
+    if (!wifiModelInstance.lastResetNetworkCount){
+      //first time run so we need to calibrate the app counter to work from this point as a 0 point.
+      wifiModelInstance.lastResetNetworkCount = @(latestNetworkReading);
+    } else if (latestNetworkReading < wifiModelInstance.lastResetNetworkCount.longValue){
       // The device has been restarted since last app run which has reset the ifConfig counters
       // Therefore the Network Reference needs to be recalibrated.
       // This means some accuracy may be lost between app runs.
       // Set the 'reset' counter to 0 and calculate delta from there since there has been AT LEAST that much net usage between app runs.
-      si.lastResetNetworkCount = @0;
+      wifiModelInstance.lastResetNetworkCount = @0;
     }
-    [[NSUserDefaults standardUserDefaults] setValue:si.lastResetNetworkCount forKey:RESET_NETWORK_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:wifiModelInstance.lastResetNetworkCount forKey:RESET_NETWORK_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
     NSLog(@"the currect reset state (used for a reference in calculations): %@",[[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY]);
 
-    NSLog(@"The saved usage was %@",[[NSUserDefaults standardUserDefaults] valueForKey:NETWORK_KEY]);
+    NSLog(@"The saved usage was %@",[[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_NET_USAGE_KEY]);
 
-    NSLog(@"Dollars cost Per CO2g: $%f",si.costPerCO2g);
-    NSLog(@"CO2 grams Per Byte: %f grams",si.co2gPerByte);
-    NSLog(@"Dollars cost Per Gigabyte: $%f",si.costPerKilobyte*1000*1000);
+    NSLog(@"Dollars cost Per CO2g: $%f",wifiModelInstance.costPerCO2g);
+    NSLog(@"CO2 grams Per Byte: %f grams",wifiModelInstance.co2gPerByte);
+    NSLog(@"Dollars cost Per Gigabyte: $%f",wifiModelInstance.costPerKilobyte*1000*1000);
   });
-  return si;
+  return wifiModelInstance;
 }
 
 #pragma mark - useful CO2 Units
@@ -104,7 +110,7 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
 }
 
 -(void)persistWebUsage {
-  [[NSUserDefaults standardUserDefaults] setValue:@([self networkUsageKB]) forKey:NETWORK_KEY];
+  [[NSUserDefaults standardUserDefaults] setValue:@([self networkUsageKB]) forKey:CURRENT_NET_USAGE_KEY];
 }
 
 -(void)refreshNetworkStats {

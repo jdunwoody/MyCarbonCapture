@@ -113,7 +113,7 @@
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeRight
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self.thermBG attribute:NSLayoutAttributeRight
-                                                    multiplier:1 constant:-1]];
+                                                    multiplier:1 constant:-0.5]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self.thermBG attribute:NSLayoutAttributeTop
@@ -133,10 +133,16 @@
 }
 
 -(void)setLevel:(CGFloat)level {
-    CGFloat newConst = level * self.thermBG.frame.size.width;
+  if (level >=1) {
+    _level = 1;
+  } else {
+  _level = level;
 
-    self.maskConstraint.constant = newConst < 2 ? 2 : newConst;
+    CGFloat newConst = _level * self.thermBG.frame.size.width - 1;
+
+    self.maskConstraint.constant = newConst;
   [self layoutIfNeeded];
+  }
 }
 
 

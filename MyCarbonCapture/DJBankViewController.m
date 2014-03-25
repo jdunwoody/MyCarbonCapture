@@ -16,7 +16,6 @@
 
 @implementation DJBankViewController
 static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
-static NSString *TREE_IDENTITY = @"Tree";
 
 
 

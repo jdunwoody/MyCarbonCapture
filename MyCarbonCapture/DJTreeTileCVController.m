@@ -8,6 +8,7 @@
 #import "DJTreeTileCVController.h"
 #import "DJLeavesCollectionViewLayout.h"
 #import "DJWifiUsageModel.h"
+#import "Tree+_StorageType.h"
 
 
 @interface DJTreeTileCVController () <UIAlertViewDelegate>
@@ -26,25 +27,31 @@ static NSString *CellIdentifier = @"CellIdentifier";
 static NSString * CURRENT_TREE_PROGRESS_KEY = @"CurrentTreeProgress";
 #define NUM_CELLs 56
 
-/* Each tree is worth 5GB of data
+/* Each tree is worth 500MB of data
  To work out the difference for each .1 alpha step on each tile
- 5*1024*1024 = 5242880 kb / 56 tiles / 100 for each alpha step = 936 kilobytes
+ 500*1024 = 512000 kb / 56 tiles / 100 for each alpha step = 91.47 kilobytes
  */
-static int ANIMATION_STEP_THRESHOLD = 1; // should be 936;
+static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
 -(id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:[[DJLeavesCollectionViewLayout alloc] init]];
   if (self) {
     self.leavesLayout = (DJLeavesCollectionViewLayout*)self.collectionViewLayout;
-    [[NSUserDefaults standardUserDefaults] setInteger:400 forKey:CURRENT_TREE_PROGRESS_KEY];
+    //[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:CURRENT_TREE_PROGRESS_KEY];
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.numCells = 60;
-    _incompletCells = [NSMutableArray array];
-    for (unsigned i = 0; i < self.numCells; i++)
-      [_incompletCells addObject:@(i)];
-  }
+    [self resetCells];
+     }
   return self;
+}
+
+-(void)resetCells{
+  _incompletCells = [NSMutableArray array];
+  for (unsigned i = 0; i < self.numCells; i++)
+    [_incompletCells addObject:@(i)];
+  [self.collectionView reloadData];
+
 }
 
 - (void)viewDidLoad
@@ -67,7 +74,7 @@ static int ANIMATION_STEP_THRESHOLD = 1; // should be 936;
 
   //Bring the tree up to it's previous stage of growth after a restart
   [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(restoreTree) userInfo:nil repeats:NO]; // Schedule Restore until after the the view has been all loaded
-  self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.6 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
+  self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
   [self.webCheckTimer fire];
 }
 
@@ -93,9 +100,29 @@ static int ANIMATION_STEP_THRESHOLD = 1; // should be 936;
 
   } completionBlock:^{
     NSLog(@"this is the end ");
-    [self.webCheckTimer invalidate];
+    [self addNewTree];
+    //[self.webCheckTimer invalidate];
+    [self resetCells];
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:CURRENT_TREE_PROGRESS_KEY];
+
     [[DJWifiUsageModel sharedInstance] persistWebUsage];
   } ];
+}
+
+
+-(void)addNewTree {
+  unsigned ranNum = arc4random_uniform(5);
+  NSError *error = nil;
+  NSString *imgName = nil;
+  Tree * tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
+  imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",ranNum];
+  tree.image = [UIImage imageNamed:imgName];
+  tree.name = [NSString stringWithFormat:@"The tree name is tree%d",ranNum];
+  tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",ranNum];
+  tree.useIdentifier = TreeStorageUsageTypeGrowth;
+  [self.moc save:&error];
+  if (error)
+    NSLog(@"The found error is %@",error);
 }
 
 -(void)growTreeWithProgressBlock:(void(^)(void))progress completionBlock:(void(^)(void))completion {
@@ -114,7 +141,7 @@ static int ANIMATION_STEP_THRESHOLD = 1; // should be 936;
       [self incrementWebUsage];
       return;
     }
-    attr.alpha +=.06;
+    attr.alpha +=.1;
     [self.collectionView.collectionViewLayout invalidateLayout];
     //NSLog(@"the count left is %d",self.incompletCells.count);
     if (progress)progress();

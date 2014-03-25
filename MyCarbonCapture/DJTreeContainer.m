@@ -31,6 +31,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 -(void)viewDidLoad {
 
   DJTreeTileCVController *vc = [[DJTreeTileCVController alloc] initWithCollectionViewLayout:nil];
+  vc.moc = self.moc;
   vc.delegate = self;
 
   [self.view addSubview:vc.view];
@@ -107,7 +108,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 -(void)didIncreaseUsageStats:(long long)kilobytes {
   self.donateButton.alpha +=.01;
   self.gasValueLabel.text = [NSString stringWithFormat:@"%lld kB",kilobytes];
-  self.thermometer.level += .1;
+  self.thermometer.level += .01;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
