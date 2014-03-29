@@ -12,7 +12,7 @@
 
 @interface DJForestViewController ()
 
-@property(nonatomic, strong) DJBankViewController *bankViewController;
+@property(nonatomic, strong) DJBankViewController *tileViewController;
 @end
 
 @implementation DJForestViewController
@@ -43,13 +43,13 @@
   backButton.translatesAutoresizingMaskIntoConstraints = NO;
 
   //Add the bank view to display pending trees
-  self.bankViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
-  self.bankViewController.moc = self.moc;
-  [self addChildViewController:self.bankViewController];
-  self.bankViewController.collectionView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:.5];
-  [self.view addSubview:self.bankViewController.view];
+  self.tileViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
+  self.tileViewController.moc = self.moc;
+  [self addChildViewController:self.tileViewController];
+  self.tileViewController.collectionView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:.5];
+  [self.view addSubview:self.tileViewController.view];
 
-  NSDictionary * viewsDict = @{@"backButton":backButton,@"bankView": self.bankViewController.view};
+  NSDictionary * viewsDict = @{@"backButton":backButton,@"bankView": self.tileViewController.view};
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bankView]-5-[backButton]-|" options:NSLayoutFormatAlignAllBottom metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[backButton]-|" options:0 metrics:nil views:viewsDict]];
 }
@@ -63,7 +63,7 @@
 #pragma mark  - Forest delegate
 
 - (void)forestDidUpdateTreeCollection {
-  [self.bankViewController refreshBankViewCollection];
+  [self.tileViewController refreshBankViewCollection];
 }
 
 

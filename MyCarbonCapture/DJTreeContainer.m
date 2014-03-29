@@ -10,6 +10,8 @@
 #import "DJBankViewController.h"
 #import "DJThermometerView.h"
 
+#import "Masonry.h"
+
 @interface DJTreeContainer ()
 @property (nonatomic,strong) UIButton *donateButton;
 @property (nonatomic, strong) UILabel *gasValueLabel;
@@ -22,34 +24,28 @@
 
 static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  return self;
-}
-
-
 -(void)viewDidLoad {
 
-  DJTreeTileCVController *vc = [[DJTreeTileCVController alloc] initWithCollectionViewLayout:nil];
-  vc.moc = self.moc;
-  vc.delegate = self;
+  DJTreeTileCVController *tileViewController = [[DJTreeTileCVController alloc] initWithCollectionViewLayout:nil];
+  tileViewController.moc = self.moc;
+  tileViewController.delegate = self;
 
-  [self.view addSubview:vc.view];
-  vc.view.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:tileViewController.view];
+  tileViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
   self.title = @"MyCarbonCapture";
 
-/*
-  _donateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 50, 200, 50)];
-  [_donateButton setTitle:@"Donate Here" forState:UIControlStateNormal];
-  [_donateButton setTitleColor:[UIColor colorWithRed:0 green:.47 blue:.2 alpha:1] forState:UIControlStateNormal];
-  _donateButton.alpha = 0.0f;
-  _donateButton.titleLabel.font = [_donateButton.titleLabel.font fontWithSize:40];
-  [_donateButton addTarget:self action:@selector(donateNow) forControlEvents:UIControlEventTouchUpInside];
-  _donateButton.translatesAutoresizingMaskIntoConstraints = NO;
- */
-  
-  [self addChildViewController:vc];
-  [self.view addSubview:vc.view];
+  /*
+   _donateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 50, 200, 50)];
+   [_donateButton setTitle:@"Donate Here" forState:UIControlStateNormal];
+   [_donateButton setTitleColor:[UIColor colorWithRed:0 green:.47 blue:.2 alpha:1] forState:UIControlStateNormal];
+   _donateButton.alpha = 0.0f;
+   _donateButton.titleLabel.font = [_donateButton.titleLabel.font fontWithSize:40];
+   [_donateButton addTarget:self action:@selector(donateNow) forControlEvents:UIControlEventTouchUpInside];
+   _donateButton.translatesAutoresizingMaskIntoConstraints = NO;
+   */
+
+  [self addChildViewController:tileViewController];
+  [self.view addSubview:tileViewController.view];
   [self.view addSubview:_donateButton];
 
 
@@ -78,7 +74,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
   [self.view addSubview:flipButton];
 
-  NSDictionary *viewsDict = @{@"collectionView": vc.view,
+  NSDictionary *viewsDict = @{@"collectionView": tileViewController.view,
                               @"menuBar":self.topLayoutGuide,
                               // @"donateButton":_donateButton,
                               @"bankView": self.bankViewController.view,
@@ -87,9 +83,11 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
                               @"thermometer": self.thermometer,
                               @"flipButton":flipButton
                               };
-  [viewsDict.allValues enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
-    view.translatesAutoresizingMaskIntoConstraints = NO;
+
+  [viewsDict eachValue:^(UIView* value) {
+    value.translatesAutoresizingMaskIntoConstraints = NO;
   }];
+  
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[collectionView]-[gasValueLabel][thermometer]-[bankView]-|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[gasLabel][gasValueLabel]" options:NSLayoutFormatAlignAllCenterY metrics:0 views:viewsDict]];
@@ -101,7 +99,6 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
-
 }
 
 #pragma mark - CollectionViewDelegates

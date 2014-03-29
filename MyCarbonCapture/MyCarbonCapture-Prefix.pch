@@ -36,6 +36,7 @@
 #import <CoreData/CoreData.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <ObjectiveSugar/ObjectiveSugar.h>
 @import CoreData;
 
 #endif
