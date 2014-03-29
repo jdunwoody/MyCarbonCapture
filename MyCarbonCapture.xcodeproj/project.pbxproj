@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03A2784443064FD2B692ABC5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F9AC22F6D344C185570A56 /* libPods.a */; };
+		50FD10D38FEB43439BA21495 /* libPods-MyCarbonCaptureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F202BB78CE74CFB8381B99C /* libPods-MyCarbonCaptureTests.a */; };
 		8EBFA57018B4ABC40075312B /* DJBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBFA56F18B4ABC40075312B /* DJBankViewController.m */; };
 		8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC278951853635C00FCB356 /* DJTreeContainer.m */; };
 		8EC278971853635C00FCB356 /* DJTreeContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC278951853635C00FCB356 /* DJTreeContainer.m */; };
@@ -44,7 +45,7 @@
 		8EEC7E6E184A92C500D0F1C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E4D184A92C500D0F1C3 /* Foundation.framework */; };
 		8EEC7E6F184A92C500D0F1C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEC7E51184A92C500D0F1C3 /* UIKit.framework */; };
 		8EEC7E77184A92C500D0F1C3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EEC7E75184A92C500D0F1C3 /* InfoPlist.strings */; };
-		8EEC7E79184A92C500D0F1C3 /* MyCarbonCaptureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEC7E78184A92C500D0F1C3 /* MyCarbonCaptureTests.m */; };
+		8EEC7E79184A92C500D0F1C3 /* WifiUsageModelSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEC7E78184A92C500D0F1C3 /* WifiUsageModelSpec.m */; };
 		8EEC7E84184A952A00D0F1C3 /* DJTreeTileCVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEC7E83184A952A00D0F1C3 /* DJTreeTileCVController.m */; };
 		8EEC7E85184A952A00D0F1C3 /* DJTreeTileCVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEC7E83184A952A00D0F1C3 /* DJTreeTileCVController.m */; };
 		8EEC7E88184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEC7E87184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m */; };
@@ -62,6 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F202BB78CE74CFB8381B99C /* libPods-MyCarbonCaptureTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyCarbonCaptureTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F9AC22F6D344C185570A56 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EBFA56E18B4ABC40075312B /* DJBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBankViewController.h; sourceTree = "<group>"; };
 		8EBFA56F18B4ABC40075312B /* DJBankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJBankViewController.m; sourceTree = "<group>"; };
@@ -105,12 +107,13 @@
 		8EEC7E6C184A92C500D0F1C3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8EEC7E74184A92C500D0F1C3 /* MyCarbonCaptureTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MyCarbonCaptureTests-Info.plist"; sourceTree = "<group>"; };
 		8EEC7E76184A92C500D0F1C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8EEC7E78184A92C500D0F1C3 /* MyCarbonCaptureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCarbonCaptureTests.m; sourceTree = "<group>"; };
+		8EEC7E78184A92C500D0F1C3 /* WifiUsageModelSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WifiUsageModelSpec.m; sourceTree = "<group>"; };
 		8EEC7E82184A952A00D0F1C3 /* DJTreeTileCVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJTreeTileCVController.h; sourceTree = "<group>"; };
 		8EEC7E83184A952A00D0F1C3 /* DJTreeTileCVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJTreeTileCVController.m; sourceTree = "<group>"; };
 		8EEC7E86184A975600D0F1C3 /* DJLeavesCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJLeavesCollectionViewLayout.h; sourceTree = "<group>"; };
 		8EEC7E87184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJLeavesCollectionViewLayout.m; sourceTree = "<group>"; };
 		BED37F248D2A44B9896D3B18 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		E60866D8943E4800A852B693 /* Pods-MyCarbonCaptureTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCarbonCaptureTests.xcconfig"; path = "Pods/Pods-MyCarbonCaptureTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +137,7 @@
 				8EEC7E6D184A92C500D0F1C3 /* XCTest.framework in Frameworks */,
 				8EEC7E6F184A92C500D0F1C3 /* UIKit.framework in Frameworks */,
 				8EEC7E6E184A92C500D0F1C3 /* Foundation.framework in Frameworks */,
+				50FD10D38FEB43439BA21495 /* libPods-MyCarbonCaptureTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +205,7 @@
 				8EEC7E4C184A92C500D0F1C3 /* Frameworks */,
 				8EEC7E4B184A92C500D0F1C3 /* Products */,
 				BED37F248D2A44B9896D3B18 /* Pods.xcconfig */,
+				E60866D8943E4800A852B693 /* Pods-MyCarbonCaptureTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -224,6 +229,7 @@
 				8EEC7E51184A92C500D0F1C3 /* UIKit.framework */,
 				8EEC7E6C184A92C500D0F1C3 /* XCTest.framework */,
 				85F9AC22F6D344C185570A56 /* libPods.a */,
+				0F202BB78CE74CFB8381B99C /* libPods-MyCarbonCaptureTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -261,7 +267,7 @@
 		8EEC7E72184A92C500D0F1C3 /* MyCarbonCaptureTests */ = {
 			isa = PBXGroup;
 			children = (
-				8EEC7E78184A92C500D0F1C3 /* MyCarbonCaptureTests.m */,
+				8EEC7E78184A92C500D0F1C3 /* WifiUsageModelSpec.m */,
 				8EEC7E73184A92C500D0F1C3 /* Supporting Files */,
 			);
 			path = MyCarbonCaptureTests;
@@ -302,9 +308,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8EEC7E7F184A92C500D0F1C3 /* Build configuration list for PBXNativeTarget "MyCarbonCaptureTests" */;
 			buildPhases = (
+				2CDE748D1B894868B8E57636 /* Check Pods Manifest.lock */,
 				8EEC7E67184A92C500D0F1C3 /* Sources */,
 				8EEC7E68184A92C500D0F1C3 /* Frameworks */,
 				8EEC7E69184A92C500D0F1C3 /* Resources */,
+				B20F7736E4AB43AEAAB7FB0A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -389,6 +397,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		2CDE748D1B894868B8E57636 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		6A07DF714DC3484AA90537EC /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -402,6 +425,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B20F7736E4AB43AEAAB7FB0A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-MyCarbonCaptureTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -444,7 +482,7 @@
 				8EE4D01E18AEE21700107DEC /* DJCoredataStack.m in Sources */,
 				8EE74D0818B8CD56008C9A78 /* Tree+_StorageType.m in Sources */,
 				8EE74D0C18B98670008C9A78 /* DJThermometerView.m in Sources */,
-				8EEC7E79184A92C500D0F1C3 /* MyCarbonCaptureTests.m in Sources */,
+				8EEC7E79184A92C500D0F1C3 /* WifiUsageModelSpec.m in Sources */,
 				8EC71F8D18AF900E000061A4 /* UIImageToDataTransformer.m in Sources */,
 				8EC71FBE18AF9AFD000061A4 /* DJForestViewController.m in Sources */,
 				8EE4D02218AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */,
@@ -607,6 +645,7 @@
 		};
 		8EEC7E80184A92C500D0F1C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E60866D8943E4800A852B693 /* Pods-MyCarbonCaptureTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/My Carbon Capture.app/My Carbon Capture";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -629,6 +668,7 @@
 		};
 		8EEC7E81184A92C500D0F1C3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E60866D8943E4800A852B693 /* Pods-MyCarbonCaptureTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/My Carbon Capture.app/My Carbon Capture";
 				FRAMEWORK_SEARCH_PATHS = (

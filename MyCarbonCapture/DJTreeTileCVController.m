@@ -171,7 +171,7 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-  NSString *imageName = [NSString stringWithFormat:@"WOS_AppTree_v1b_%02d",indexPath.row+1];
+  NSString *imageName = [NSString stringWithFormat:@"WOS_AppTree_v1b_%02ld",indexPath.row+1];
   cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
   return cell;
 }

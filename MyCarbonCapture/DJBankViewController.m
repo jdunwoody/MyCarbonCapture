@@ -57,11 +57,9 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
   id <NSFetchedResultsSectionInfo> sectionInfo = [[self.frc sections] objectAtIndex:section];
-  NSLog(@"the count of kck is %d",[sectionInfo numberOfObjects]);
+  NSLog(@"the count of kck is %lu",(unsigned long)[sectionInfo numberOfObjects]);
   return [sectionInfo numberOfObjects];
 }
-
-
 
 -(NSFetchedResultsController *)frc {
   if (_frc) {
