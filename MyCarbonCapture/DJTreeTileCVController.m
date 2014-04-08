@@ -9,6 +9,7 @@
 #import "DJLeavesCollectionViewLayout.h"
 #import "DJWifiUsageModel.h"
 #import "Tree+_StorageType.h"
+#import "DJFactShareViewController.h"
 
 
 @interface DJTreeTileCVController () <UIAlertViewDelegate>
@@ -18,6 +19,7 @@
 @property (nonatomic) long long currWebUsage;
 @property (nonatomic) int currentTreeGrowth;
 @property (nonatomic, strong) DJLeavesCollectionViewLayout *leavesLayout;
+@property (nonatomic,strong) DJFactShareViewController *factViewController;
 
 @end
 
@@ -37,12 +39,11 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   self = [super initWithCollectionViewLayout:[[DJLeavesCollectionViewLayout alloc] init]];
   if (self) {
     self.leavesLayout = (DJLeavesCollectionViewLayout*)self.collectionViewLayout;
-    //[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:CURRENT_TREE_PROGRESS_KEY];
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.numCells = 60;
+    self.numCells = NUM_CELLs;
     [self resetCells];
-     }
+  }
   return self;
 }
 
@@ -51,7 +52,6 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   for (unsigned i = 0; i < self.numCells; i++)
     [_incompletCells addObject:@(i)];
   [self.collectionView reloadData];
-
 }
 
 - (void)viewDidLoad
@@ -68,7 +68,6 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 -(void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self.collectionViewLayout invalidateLayout];
-  // NSLog(@"the data is %lld Bytes",([DJWifiUsageModel getDataCounters]));
   [DJWifiUsageModel sharedInstance];
   NSLog(@"the previous web usage was %lld",self.currWebUsage);
 
@@ -194,6 +193,7 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
 }
 
+#pragma mark Did you know messages
 
 -(void)displayDidYouKnowMessage {
   int whichMesg = arc4random_uniform(6);
@@ -219,17 +219,26 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     default:
       break;
   }
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Did You Know..." message:msgString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
+  self.factViewController = [DJFactShareViewController withMessage:msgString];
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-  NSIndexPath *resetPath = self.leavesLayout.highlightledIndexPath;
-  self.leavesLayout.highlightledIndexPath = nil;
-  self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.6 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
-  [self.webCheckTimer fire];
-  [self.collectionView performBatchUpdates:^{
-    UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:resetPath];
+-(void)setFactViewController:(DJFactShareViewController *)factViewController{
+  [self resetPreviousCellHighlight];
+/*
+  if (_factViewController != factViewController) {
+
+    [_factViewController.view removeFromSuperview];
+    [_factViewController removeFromParentViewController];
+    _factViewController = factViewController;
+    self.factViewController.view.center = self.view.center;
+    [self addChildViewController:self.factViewController];
+    [self.view addSubview:self.factViewController.view];
+
+  }
+ */
+}
+
+  UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:resetPath];
     [self.leavesLayout unhighlightAttributes:attr];
   } completion:nil];
 }

@@ -8,9 +8,9 @@
 #import "DJLeavesCollectionViewLayout.h"
 
 @interface DJLeavesCollectionViewLayout ()
-@property (nonatomic,strong) UIDynamicAnimator * animator;
+@property (nonatomic, strong) UIDynamicAnimator * animator;
 @property (nonatomic) BOOL runBefore;
-@property (nonatomic,strong) UICollectionViewLayoutAttributes *resetAttrs;
+@property (nonatomic, strong) UICollectionViewLayoutAttributes *resetAttrs;
 
 @end
 
@@ -41,9 +41,9 @@
     }
       UIAttachmentBehavior *behaviour = [[UIAttachmentBehavior alloc] initWithItem:obj attachedToAnchor:[obj center]];
 
-      behaviour.length = 1.0f;
-      behaviour.damping = 0.25f;
-      behaviour.frequency = 2.70f;
+      behaviour.length = 1.5f;
+      behaviour.damping = 0.03f;
+      behaviour.frequency = 2.40f;
       [self.animator addBehavior:behaviour];
     }];
     self.runBefore = YES;
