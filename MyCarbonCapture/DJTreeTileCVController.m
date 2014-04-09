@@ -181,17 +181,35 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
-  // NSLog(@"the highlighted index path is %@!",indexPath);
   [self.webCheckTimer invalidate];
   self.leavesLayout.highlightledIndexPath = indexPath;
-  // __block UICollectionViewLayoutAttributes *attr = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-  [self.collectionView performBatchUpdates:^{
-    UICollectionViewLayoutAttributes *attr = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-    [self.leavesLayout highlightAttributes:attr];
-  } completion:nil];
+  __block  UICollectionViewLayoutAttributes *attr = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+  [self.leavesLayout highlightAttributes:attr];
   [self displayDidYouKnowMessage];
+}
+
+-(void)setFactViewController:(DJFactShareViewController *)factViewController{
+
+  if (_factViewController != factViewController) {
+
+    [_factViewController.view removeFromSuperview];
+    [_factViewController removeFromParentViewController];
+    _factViewController = factViewController;
+    self.factViewController.view.center = self.view.center;
+    [self addChildViewController:self.factViewController];
+    [self.view addSubview:self.factViewController.view];
+  }
+  NSIndexPath *resetPath = self.leavesLayout.prevHighlight;
+
+  [self.collectionView performBatchUpdates:^{
+    UICollectionViewLayoutAttributes *attr = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:resetPath];
+    [self.leavesLayout unhighlightAttributes:attr];
+  } completion:nil];
+  self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.6 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
+  [self.webCheckTimer fire];
 
 }
+
 
 #pragma mark Did you know messages
 
@@ -222,25 +240,5 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   self.factViewController = [DJFactShareViewController withMessage:msgString];
 }
 
--(void)setFactViewController:(DJFactShareViewController *)factViewController{
-  [self resetPreviousCellHighlight];
-/*
-  if (_factViewController != factViewController) {
-
-    [_factViewController.view removeFromSuperview];
-    [_factViewController removeFromParentViewController];
-    _factViewController = factViewController;
-    self.factViewController.view.center = self.view.center;
-    [self addChildViewController:self.factViewController];
-    [self.view addSubview:self.factViewController.view];
-
-  }
- */
-}
-
-  UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:resetPath];
-    [self.leavesLayout unhighlightAttributes:attr];
-  } completion:nil];
-}
 
 @end

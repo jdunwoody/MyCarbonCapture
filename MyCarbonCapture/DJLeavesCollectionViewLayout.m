@@ -94,18 +94,25 @@
     [self.animator updateItemUsingCurrentState:item];
   }];
 
-  return NO;
+  return YES;
 
+}
+
+-(void)setHighlightledIndexPath:(NSIndexPath *)highlightledIndexPath {
+
+
+  _prevHighlight = _highlightledIndexPath;
+  _highlightledIndexPath = highlightledIndexPath;
 }
 
 -(void)highlightAttributes:(UICollectionViewLayoutAttributes*) attr {
   if (!self.resetAttrs){
     self.resetAttrs = [attr copy];
   }
-  attr.alpha =1;
+  attr.alpha = 1;
   attr.transform3D = CATransform3DScale(attr.transform3D, 2.0, 2.0, 0);
   attr.zIndex = INT32_MAX;
-  attr.transform = CGAffineTransformMakeScale(2, 2);
+  attr.transform = CGAffineTransformMakeScale(1.3, 1.3);
 }
 
 -(void)unhighlightAttributes:(UICollectionViewLayoutAttributes*)attr {
@@ -113,7 +120,7 @@
   attr.transform3D = self.resetAttrs.transform3D;
   attr.zIndex = self.resetAttrs.zIndex;
   attr.transform = CGAffineTransformMakeScale(1, 1);
-  self.resetAttrs = nil;
+  //  self.resetAttrs = nil;
 }
 
 
