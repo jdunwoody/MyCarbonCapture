@@ -10,6 +10,8 @@
 @interface DJLeavesCollectionViewLayout : UICollectionViewFlowLayout
 @property (nonatomic,strong) NSIndexPath *highlightledIndexPath;
 @property (nonatomic, strong) NSIndexPath *prevHighlight;
+@property (nonatomic, strong) UIDynamicAnimator * animator;
+
 
 -(void) highlightAttributes:(UICollectionViewLayoutAttributes*) attr;
 -(void)unhighlightAttributes:(UICollectionViewLayoutAttributes*)attr;

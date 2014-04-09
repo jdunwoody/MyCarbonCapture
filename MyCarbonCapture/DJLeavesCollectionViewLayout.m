@@ -8,7 +8,6 @@
 #import "DJLeavesCollectionViewLayout.h"
 
 @interface DJLeavesCollectionViewLayout ()
-@property (nonatomic, strong) UIDynamicAnimator * animator;
 @property (nonatomic) BOOL runBefore;
 @property (nonatomic, strong) UICollectionViewLayoutAttributes *resetAttrs;
 
@@ -99,7 +98,6 @@
 }
 
 -(void)setHighlightledIndexPath:(NSIndexPath *)highlightledIndexPath {
-
 
   _prevHighlight = _highlightledIndexPath;
   _highlightledIndexPath = highlightledIndexPath;

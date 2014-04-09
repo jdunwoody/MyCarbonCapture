@@ -17,7 +17,7 @@
 @property (nonatomic) unsigned numCells;
 @property (nonatomic, strong) NSTimer *webCheckTimer;
 @property (nonatomic) long long currWebUsage;
-@property (nonatomic) int currentTreeGrowth;
+@property (nonatomic) NSUInteger currentTreeGrowth;
 @property (nonatomic, strong) DJLeavesCollectionViewLayout *leavesLayout;
 @property (nonatomic,strong) DJFactShareViewController *factViewController;
 
@@ -126,7 +126,7 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
 -(void)growTreeWithProgressBlock:(void(^)(void))progress completionBlock:(void(^)(void))completion {
   if (self.incompletCells.lastObject) {
-    unsigned randNumber = arc4random_uniform([self.incompletCells count]);
+    NSUInteger randNumber = arc4random_uniform((UInt32)[self.incompletCells count]);
     NSIndexPath *pickedPath = [NSIndexPath indexPathForItem:[self.incompletCells[randNumber] intValue] inSection:0];
 
     if ( self.leavesLayout.highlightledIndexPath && [self.leavesLayout.highlightledIndexPath isEqual:pickedPath]) {
@@ -200,11 +200,15 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     [self.view addSubview:self.factViewController.view];
   }
   NSIndexPath *resetPath = self.leavesLayout.prevHighlight;
-
-  [self.collectionView performBatchUpdates:^{
-    UICollectionViewLayoutAttributes *attr = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:resetPath];
+  UICollectionViewLayoutAttributes *attr = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:resetPath];
+  if ([(DJLeavesCollectionViewLayout*)self.collectionView.collectionViewLayout animator].isRunning ) {
+    //if the tiles are currently bouncing dont animate the cell changes to avoid the stutter in the bouncing.
     [self.leavesLayout unhighlightAttributes:attr];
-  } completion:nil];
+  } else {
+    [self.collectionView performBatchUpdates:^{
+      [self.leavesLayout unhighlightAttributes:attr];
+    } completion:nil];
+  }
   self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.6 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
   [self.webCheckTimer fire];
 
