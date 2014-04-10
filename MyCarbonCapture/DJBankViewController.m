@@ -88,8 +88,6 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
     abort();
   }
 
-
-
   return _frc;
 }
 

@@ -55,9 +55,7 @@
 }
 
 -(void)goBack {
-  [self dismissViewControllerAnimated:YES completion:^{
-    nil;
-  }];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark  - Forest delegate
@@ -65,7 +63,5 @@
 - (void)forestDidUpdateTreeCollection {
   [self.tileViewController refreshBankViewCollection];
 }
-
-
 
 @end

@@ -9,12 +9,15 @@
 
 #import "DJFactShareViewController.h"
 #import "Masonry.h"
+#import <Social/Social.h>
 
 
 @interface DJFactShareViewController ()
 
-@property(nonatomic,strong) NSString* message;
-@property ( nonatomic,strong) UILabel *messageLabel;
+@property (nonatomic,strong) NSString* message;
+@property (nonatomic,strong) UILabel *messageLabel;
+@property (nonatomic,strong) UIButton *shareButton;
+@property (nonatomic,strong) UIButton* dismissButton;
 
 @end
 
@@ -28,6 +31,19 @@
     self.messageLabel.numberOfLines = 0;
     [self.messageLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [self.view  addSubview:self.messageLabel];
+    self.shareButton = ({UIButton* b = [UIButton buttonWithType:UIButtonTypeSystem];
+      [b addTarget:self action:@selector(shareFact) forControlEvents:UIControlEventTouchUpInside];
+      [b setTitle:@"Share" forState:UIControlStateNormal];
+      b;
+    });
+    self.dismissButton = ({UIButton* b = [UIButton buttonWithType:UIButtonTypeSystem];
+      [b addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+      [b setTitle:@"OK" forState:UIControlStateNormal];
+      b;
+    });
+
+    [self.view addSubview:self.shareButton];
+    [self.view addSubview:self.dismissButton];
     self.view.backgroundColor =[UIColor colorWithRed:0.680 green:0.759 blue:0.683 alpha:1.000];
     self.view.layer.cornerRadius = 6.0;
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -54,9 +70,18 @@
   }];
 
   [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.centerX.equalTo(self.view.centerX);
-    make.centerY.equalTo(self.view.centerY);
-    make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(10, 10, 10, 10));
+    make.left.equalTo(self.view.left).offset(10);
+    make.top.equalTo(self.view.top).offset(10);
+    make.right.equalTo(self.view.right).offset(-10);
+  }];
+  [self.dismissButton makeConstraints:^(MASConstraintMaker *make) {
+    make.right.equalTo(self.view.right).offset(-20);
+    make.centerY.equalTo(self.shareButton.centerY);
+  }];
+  [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.right.equalTo(self.dismissButton.left).offset(-20);
+    make.top.equalTo(self.messageLabel.bottom).offset(-10);
+    make.bottom.equalTo(self.view.bottom).offset(-10);
   }];
 
   [super updateViewConstraints];
@@ -69,6 +94,27 @@
 
   }
   return factShareView;
+}
+
+#pragma mark fact Sharing
+
+-(void)shareFact {
+  DLog(@"Sharing fact");
+  //if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+  SLComposeViewController *socialViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+  //  (SLComposeViewControllerResult)(^SLComposeViewControllerCompletionHandler)(void){nil; return SLComposeViewControllerResultDone;}
+  //  [socialViewController setCompletionHandler:handler];
+  //
+  [socialViewController setInitialText:self.message];
+
+  [self presentViewController:socialViewController animated:YES completion:nil];
+  //}
+}
+#pragma mark Dismiss Me
+-(void)dismiss {
+  DLog();
+  [self.view removeFromSuperview];
+  [self removeFromParentViewController];
 }
 
 @end
