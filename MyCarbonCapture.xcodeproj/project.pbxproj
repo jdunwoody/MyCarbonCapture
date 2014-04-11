@@ -10,8 +10,8 @@
 		03A2784443064FD2B692ABC5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F9AC22F6D344C185570A56 /* libPods.a */; };
 		50FD10D38FEB43439BA21495 /* libPods-MyCarbonCaptureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F202BB78CE74CFB8381B99C /* libPods-MyCarbonCaptureTests.a */; };
 		8E7EA63A18E78D37004628F8 /* TreeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7EA63918E78D37004628F8 /* TreeSpec.m */; };
-		8E81ECF118F75845007C8408 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E81ECF018F75845007C8408 /* Tree.m */; };
-		8E81ECF218F75845007C8408 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E81ECF018F75845007C8408 /* Tree.m */; };
+		8E81ED3618F7EB39007C8408 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E81ED3518F7EB39007C8408 /* Tree.m */; };
+		8E81ED3718F7EB39007C8408 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E81ED3518F7EB39007C8408 /* Tree.m */; };
 		8EB708B518E9992800E5CF7B /* DJFactShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB708B418E9992800E5CF7B /* DJFactShareViewController.m */; };
 		8EBFA57018B4ABC40075312B /* DJBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBFA56F18B4ABC40075312B /* DJBankViewController.m */; };
 		8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC278951853635C00FCB356 /* DJTreeContainer.m */; };
@@ -68,8 +68,8 @@
 		0F202BB78CE74CFB8381B99C /* libPods-MyCarbonCaptureTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyCarbonCaptureTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F9AC22F6D344C185570A56 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E7EA63918E78D37004628F8 /* TreeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeSpec.m; sourceTree = "<group>"; };
-		8E81ECEF18F75845007C8408 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
-		8E81ECF018F75845007C8408 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
+		8E81ED3418F7EB39007C8408 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		8E81ED3518F7EB39007C8408 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
 		8EB708B318E9992800E5CF7B /* DJFactShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJFactShareViewController.h; sourceTree = "<group>"; };
 		8EB708B418E9992800E5CF7B /* DJFactShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJFactShareViewController.m; sourceTree = "<group>"; };
 		8EBFA56E18B4ABC40075312B /* DJBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBankViewController.h; sourceTree = "<group>"; };
@@ -184,9 +184,9 @@
 		8EC71F7518AF8EC5000061A4 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				8E81ED3418F7EB39007C8408 /* Tree.h */,
+				8E81ED3518F7EB39007C8408 /* Tree.m */,
 				8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */,
-				8E81ECEF18F75845007C8408 /* Tree.h */,
-				8E81ECF018F75845007C8408 /* Tree.m */,
 				8EE74D0518B8CD56008C9A78 /* Tree+_StorageType.h */,
 				8EE74D0618B8CD56008C9A78 /* Tree+_StorageType.m */,
 			);
@@ -472,7 +472,7 @@
 				8EB708B518E9992800E5CF7B /* DJFactShareViewController.m in Sources */,
 				8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */,
 				8EEC7E5A184A92C500D0F1C3 /* main.m in Sources */,
-				8E81ECF118F75845007C8408 /* Tree.m in Sources */,
+				8E81ED3618F7EB39007C8408 /* Tree.m in Sources */,
 				8EE74D0718B8CD56008C9A78 /* Tree+_StorageType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,7 +481,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E81ECF218F75845007C8408 /* Tree.m in Sources */,
+				8E81ED3718F7EB39007C8408 /* Tree.m in Sources */,
 				8E7EA63A18E78D37004628F8 /* TreeSpec.m in Sources */,
 				8EC7201718B03970000061A4 /* DJForestNode.m in Sources */,
 				8EEC7E89184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m in Sources */,

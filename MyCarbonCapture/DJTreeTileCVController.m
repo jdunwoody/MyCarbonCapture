@@ -110,12 +110,12 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
 
 -(void)addNewTree {
-  unsigned ranNum = arc4random_uniform(5);
+  unsigned ranNum = arc4random_uniform(4);
   NSError *error = nil;
-  NSString *imgName = nil;
   Tree * tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
-  imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",ranNum];
-  tree.image = [UIImage imageNamed:imgName];
+  tree.imageSelect = [UIImage imageNamed:[NSString stringWithFormat:@"TreeSelect%d",ranNum]];
+  tree.imageHover = [UIImage imageNamed:[NSString stringWithFormat:@"TreeHover%d",ranNum]];
+  tree.largeImage = [UIImage imageNamed:[NSString stringWithFormat:@"Tree%d-w250px",ranNum]];
   tree.name = [NSString stringWithFormat:@"The tree name is tree%d",ranNum];
   tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",ranNum];
   tree.useIdentifier = TreeStorageUsageTypeGrowth;

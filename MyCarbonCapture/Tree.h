@@ -12,7 +12,7 @@
 
 @interface Tree : NSManagedObject
 
-@property (nonatomic, retain) UIImage* image;
+@property (nonatomic, retain) UIImage* imageSelect;
 @property (nonatomic, retain) NSString * info;
 @property (nonatomic, retain) UIImage* largeImage;
 @property (nonatomic, retain) NSString * name;

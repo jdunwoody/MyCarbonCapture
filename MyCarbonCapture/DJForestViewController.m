@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Dallas Johnson. All rights reserved.
 //
 
+#import <Masonry/View+MASShorthandAdditions.h>
 #import "DJForestViewController.h"
 #import "DJForestScene.h"
 #import "DJBankViewController.h"
@@ -49,10 +50,18 @@
   self.tileViewController.collectionView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:.5];
   [self.view addSubview:self.tileViewController.view];
 
-  NSDictionary * viewsDict = @{@"backButton":backButton,@"bankView": self.tileViewController.view};
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bankView]-5-[backButton]-|" options:NSLayoutFormatAlignAllBottom metrics:nil views:viewsDict]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[backButton]-|" options:0 metrics:nil views:viewsDict]];
+  [backButton makeConstraints:^(MASConstraintMaker *make) {
+    make.right.equalTo(self.view.right).offset(-20);
+    make.bottom.equalTo(self.bottomLayoutGuide).offset(-20);
+  }];
+  [self.tileViewController.view makeConstraints:^(MASConstraintMaker *make) {
+    make.bottom.equalTo(self.view.bottom).offset(-40);
+    make.left.equalTo(self.view.left);
+  }];
+
+
 }
+
 
 -(void)goBack {
   [self dismissViewControllerAnimated:YES completion:nil];

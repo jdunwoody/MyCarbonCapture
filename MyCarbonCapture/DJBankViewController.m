@@ -51,7 +51,7 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
   Tree *tree = [self.frc objectAtIndexPath:indexPath];
-  [cell.contentView addSubview:[[UIImageView alloc] initWithImage:tree.image]];
+  [cell.contentView addSubview:[[UIImageView alloc] initWithImage:tree.imageSelect]];
   return cell;
 }
 
@@ -94,10 +94,11 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 -(void)seedTrees {
   NSError *error = nil;
   Tree * tree = nil;
-  for (int i = 1; i <=5; i++) {
+  for (int i = 1; i <=4; i++) {
 
     tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
-    tree.image = [UIImage imageNamed:[NSString stringWithFormat:@"TreeSelect%d",i]];
+    tree.imageSelect = [UIImage imageNamed:[NSString stringWithFormat:@"TreeSelect%d",i]];
+    tree.largeImage = [UIImage imageNamed:[NSString stringWithFormat:@"Tree%d-w250px",i]];
     tree.imageHover = [UIImage imageNamed:[NSString stringWithFormat:@"TreeHover%d",i]];
     tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
     tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];

@@ -18,17 +18,18 @@
 }
 
 +(instancetype)spriteNodeWithTree:(Tree*)tree{
-  DJForestNode* treeNode = [super spriteNodeWithTexture:[SKTexture textureWithImage:tree.image]];
+  DJForestNode* treeNode = [super spriteNodeWithTexture:[SKTexture textureWithImage:tree.largeImage]];
   treeNode.tree = tree;
   return treeNode;
 }
 
 -(void)setPosition:(CGPoint)position {
   if (self.isMoving) {
-
+    self.texture = [SKTexture textureWithImage:self.tree.imageHover];
     [self setZRotation:.1];
     position = CGPointMake(position.x, position.y + LIFTING_OFFSET);
   } else {
+    self.texture = [SKTexture textureWithImage:self.tree.largeImage];
     [self setZRotation:0];
     position = CGPointMake(position.x, position.y - LIFTING_OFFSET);
     self.tree.x = position.x;
@@ -41,7 +42,7 @@
   CGFloat frameHeight = self.parent.frame.size.height;
   
   CGFloat perspectiveFactor = (1 - ((position.y - frameHeight / 2) / frameHeight)*2);
-  self.size = CGSizeApplyAffineTransform(CGSizeMake(25, 33),
+  self.size = CGSizeApplyAffineTransform(CGSizeMake(34, 34),
                                          CGAffineTransformMakeScale(perspectiveFactor,
                                                                     perspectiveFactor));
 

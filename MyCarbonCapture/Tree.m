@@ -11,7 +11,7 @@
 
 @implementation Tree
 
-@dynamic image;
+@dynamic imageSelect;
 @dynamic info;
 @dynamic largeImage;
 @dynamic name;
