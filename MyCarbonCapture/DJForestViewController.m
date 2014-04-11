@@ -13,7 +13,9 @@
 
 @interface DJForestViewController ()
 
-@property(nonatomic, strong) DJBankViewController *tileViewController;
+@property (nonatomic, strong) DJBankViewController *tileViewController;
+@property (nonatomic, strong) UIButton *selectorButton;
+@property (nonatomic, strong) MASConstraint *selectorWidth;
 @end
 
 @implementation DJForestViewController
@@ -41,13 +43,16 @@
   [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:backButton];
 
-  backButton.translatesAutoresizingMaskIntoConstraints = NO;
+  self.selectorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [self.selectorButton addTarget:self action:@selector(toggleSelectorView) forControlEvents:UIControlEventTouchUpInside];
+  [self.selectorButton setImage:[UIImage imageNamed:@"SelectorArrow"] forState:UIControlStateNormal];
+  [self.view addSubview:self.selectorButton];
 
   //Add the bank view to display pending trees
   self.tileViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
   self.tileViewController.moc = self.moc;
   [self addChildViewController:self.tileViewController];
-  self.tileViewController.collectionView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:.5];
+  // self.tileViewController.collectionView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:.5];
   [self.view addSubview:self.tileViewController.view];
 
   [backButton makeConstraints:^(MASConstraintMaker *make) {
@@ -58,8 +63,10 @@
     make.bottom.equalTo(self.view.bottom).offset(-40);
     make.left.equalTo(self.view.left);
   }];
-
-
+  [self.selectorButton makeConstraints:^(MASConstraintMaker *make) {
+    make.left.equalTo(self.tileViewController.view.right);
+    make.centerY.equalTo(self.tileViewController.view.centerY);
+  }];
 }
 
 
@@ -71,6 +78,30 @@
 
 - (void)forestDidUpdateTreeCollection {
   [self.tileViewController refreshBankViewCollection];
+}
+
+-(void)toggleSelectorView{
+  CGAffineTransform transform;
+
+  if (CGRectGetWidth(self.tileViewController.view.frame) < 100){
+    [self.tileViewController.view makeConstraints:^(MASConstraintMaker *make) {
+      self.selectorWidth = make.width.equalTo(@250);
+    }];
+    transform = CGAffineTransformMakeRotation(M_PI);
+  } else {
+    [self.selectorWidth uninstall];
+    transform = CGAffineTransformMakeRotation(2 * M_PI);
+  }
+  [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:0.60f initialSpringVelocity:0.2 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [self.view layoutIfNeeded];
+    self.selectorButton.transform = transform;
+
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:1 animations:^{
+    } completion:nil];
+    
+  } ];
+  
 }
 
 @end
