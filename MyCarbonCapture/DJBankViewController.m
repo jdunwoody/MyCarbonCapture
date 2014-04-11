@@ -94,12 +94,11 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 -(void)seedTrees {
   NSError *error = nil;
   Tree * tree = nil;
-  NSString *imgName = nil;
   for (int i = 1; i <=5; i++) {
 
     tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
-    imgName = [NSString stringWithFormat:@"MCC_BankTree#%d",i];
-    tree.image = [UIImage imageNamed:imgName];
+    tree.image = [UIImage imageNamed:[NSString stringWithFormat:@"TreeSelect%d",i]];
+    tree.imageHover = [UIImage imageNamed:[NSString stringWithFormat:@"TreeHover%d",i]];
     tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
     tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];
     tree.useIdentifier = TreeStorageUsageTypeBank;

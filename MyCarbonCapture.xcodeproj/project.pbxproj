@@ -10,6 +10,8 @@
 		03A2784443064FD2B692ABC5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F9AC22F6D344C185570A56 /* libPods.a */; };
 		50FD10D38FEB43439BA21495 /* libPods-MyCarbonCaptureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F202BB78CE74CFB8381B99C /* libPods-MyCarbonCaptureTests.a */; };
 		8E7EA63A18E78D37004628F8 /* TreeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7EA63918E78D37004628F8 /* TreeSpec.m */; };
+		8E81ECF118F75845007C8408 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E81ECF018F75845007C8408 /* Tree.m */; };
+		8E81ECF218F75845007C8408 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E81ECF018F75845007C8408 /* Tree.m */; };
 		8EB708B518E9992800E5CF7B /* DJFactShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB708B418E9992800E5CF7B /* DJFactShareViewController.m */; };
 		8EBFA57018B4ABC40075312B /* DJBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBFA56F18B4ABC40075312B /* DJBankViewController.m */; };
 		8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC278951853635C00FCB356 /* DJTreeContainer.m */; };
@@ -30,8 +32,6 @@
 		8EE4D01E18AEE21700107DEC /* DJCoredataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01C18AEE21700107DEC /* DJCoredataStack.m */; };
 		8EE4D02118AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */; };
 		8EE4D02218AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */; };
-		8EE74D0318B8CCE1008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74D0218B8CCE1008C9A78 /* Tree.m */; };
-		8EE74D0418B8CCE1008C9A78 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74D0218B8CCE1008C9A78 /* Tree.m */; };
 		8EE74D0718B8CD56008C9A78 /* Tree+_StorageType.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74D0618B8CD56008C9A78 /* Tree+_StorageType.m */; };
 		8EE74D0818B8CD56008C9A78 /* Tree+_StorageType.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74D0618B8CD56008C9A78 /* Tree+_StorageType.m */; };
 		8EE74D0B18B98670008C9A78 /* DJThermometerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE74D0A18B98670008C9A78 /* DJThermometerView.m */; };
@@ -68,6 +68,8 @@
 		0F202BB78CE74CFB8381B99C /* libPods-MyCarbonCaptureTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyCarbonCaptureTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F9AC22F6D344C185570A56 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E7EA63918E78D37004628F8 /* TreeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeSpec.m; sourceTree = "<group>"; };
+		8E81ECEF18F75845007C8408 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		8E81ECF018F75845007C8408 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
 		8EB708B318E9992800E5CF7B /* DJFactShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJFactShareViewController.h; sourceTree = "<group>"; };
 		8EB708B418E9992800E5CF7B /* DJFactShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJFactShareViewController.m; sourceTree = "<group>"; };
 		8EBFA56E18B4ABC40075312B /* DJBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBankViewController.h; sourceTree = "<group>"; };
@@ -91,8 +93,6 @@
 		8EE4D02018AF257E00107DEC /* CarbonCaptureModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarbonCaptureModel.xcdatamodel; sourceTree = "<group>"; };
 		8EE4D02318AF259C00107DEC /* CarbonCaptureModel 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CarbonCaptureModel 1.xcdatamodel"; sourceTree = "<group>"; };
 		8EE74CD318B786A1008C9A78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
-		8EE74D0118B8CCE1008C9A78 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
-		8EE74D0218B8CCE1008C9A78 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
 		8EE74D0518B8CD56008C9A78 /* Tree+_StorageType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tree+_StorageType.h"; sourceTree = "<group>"; };
 		8EE74D0618B8CD56008C9A78 /* Tree+_StorageType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tree+_StorageType.m"; sourceTree = "<group>"; };
 		8EE74D0918B98670008C9A78 /* DJThermometerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJThermometerView.h; sourceTree = "<group>"; };
@@ -185,10 +185,10 @@
 			isa = PBXGroup;
 			children = (
 				8EE4D01F18AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld */,
+				8E81ECEF18F75845007C8408 /* Tree.h */,
+				8E81ECF018F75845007C8408 /* Tree.m */,
 				8EE74D0518B8CD56008C9A78 /* Tree+_StorageType.h */,
 				8EE74D0618B8CD56008C9A78 /* Tree+_StorageType.m */,
-				8EE74D0118B8CCE1008C9A78 /* Tree.h */,
-				8EE74D0218B8CCE1008C9A78 /* Tree.m */,
 			);
 			name = CoreData;
 			path = MyCarbonCapture;
@@ -457,7 +457,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EE74D0318B8CCE1008C9A78 /* Tree.m in Sources */,
 				8EEC7E84184A952A00D0F1C3 /* DJTreeTileCVController.m in Sources */,
 				8EE4D02118AF257E00107DEC /* CarbonCaptureModel.xcdatamodeld in Sources */,
 				8EE74D0B18B98670008C9A78 /* DJThermometerView.m in Sources */,
@@ -473,6 +472,7 @@
 				8EB708B518E9992800E5CF7B /* DJFactShareViewController.m in Sources */,
 				8EC278961853635C00FCB356 /* DJTreeContainer.m in Sources */,
 				8EEC7E5A184A92C500D0F1C3 /* main.m in Sources */,
+				8E81ECF118F75845007C8408 /* Tree.m in Sources */,
 				8EE74D0718B8CD56008C9A78 /* Tree+_StorageType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,8 +481,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E81ECF218F75845007C8408 /* Tree.m in Sources */,
 				8E7EA63A18E78D37004628F8 /* TreeSpec.m in Sources */,
-				8EE74D0418B8CCE1008C9A78 /* Tree.m in Sources */,
 				8EC7201718B03970000061A4 /* DJForestNode.m in Sources */,
 				8EEC7E89184A975600D0F1C3 /* DJLeavesCollectionViewLayout.m in Sources */,
 				8EC278971853635C00FCB356 /* DJTreeContainer.m in Sources */,
