@@ -52,7 +52,6 @@
   self.tileViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
   self.tileViewController.moc = self.moc;
   [self addChildViewController:self.tileViewController];
-  // self.tileViewController.collectionView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:.5];
   [self.view addSubview:self.tileViewController.view];
 
   [backButton makeConstraints:^(MASConstraintMaker *make) {

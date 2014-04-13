@@ -21,6 +21,7 @@
 @end
 
 @implementation DJTreeContainer
+static NSByteCountFormatter *byteFormatter;
 
 static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
@@ -93,18 +94,22 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[gasLabel][gasValueLabel]" options:NSLayoutFormatAlignAllCenterY metrics:0 views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[thermometer]|" options:0 metrics:nil views:viewsDict]];
 
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bankView]-10-|" options:0 metrics:nil views:viewsDict]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bankView][flipButton]-|" options:0 metrics:nil views:viewsDict]];
 
   //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[donateButton]-20-|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewsDict]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
 }
 
 #pragma mark - CollectionViewDelegates
 -(void)didIncreaseUsageStats:(long long)kilobytes {
   self.donateButton.alpha +=.01;
-  self.gasValueLabel.text = [NSString stringWithFormat:@"%lld kB",kilobytes];
+
+  if (!byteFormatter) {
+    byteFormatter = [[NSByteCountFormatter alloc] init];
+  }
+
+  self.gasValueLabel.text = [byteFormatter stringFromByteCount:kilobytes];
   self.thermometer.level += .01;
 }
 

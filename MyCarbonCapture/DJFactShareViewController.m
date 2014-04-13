@@ -80,7 +80,7 @@
   }];
   [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
     make.right.equalTo(self.dismissButton.left).offset(-20);
-    make.top.equalTo(self.messageLabel.bottom).offset(-10);
+    make.top.equalTo(self.messageLabel.bottom);
     make.bottom.equalTo(self.view.bottom).offset(-10);
   }];
 

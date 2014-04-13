@@ -18,9 +18,39 @@
 @implementation DJForestScene
 
 -(void)didMoveToView:(SKView *)view{
-  SKNode * bgView = [SKSpriteNode spriteNodeWithImageNamed:@"MyForest_landscape_v1a"];
-  [self addChild:bgView];
-  bgView.position = CGPointMake(self.size.width/2, self.size.height/2);
+  SKSpriteNode * baseView = [SKSpriteNode spriteNodeWithImageNamed:@"Base3" ];
+  [baseView setAnchorPoint:CGPointMake(0, 0)];
+  [self addChild:baseView];
+  baseView.position = CGPointMake(0, 0);
+
+  SKSpriteNode * hill1 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill1-2" ];
+  [hill1 setAnchorPoint:CGPointMake(0, 0)];
+  [self addChild:hill1];
+  hill1.position = CGPointMake(0, 82);
+
+  SKSpriteNode * hill2 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill2-2" ];
+  [hill2 setAnchorPoint:CGPointMake(0, 0)];
+  [self addChild:hill2];
+  hill2.position = CGPointMake(0, 83+50);
+
+  SKSpriteNode * hill3 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill3-2" ];
+  [hill3 setAnchorPoint:CGPointMake(0, 0)];
+  [self addChild:hill3];
+  hill3.position = CGPointMake(0, 83+50+105);
+
+  SKSpriteNode * hill4 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill4-2" ];
+  [hill4 setAnchorPoint:CGPointMake(0, 0)];
+  [self addChild:hill4];
+  hill4.position = CGPointMake(0, 83+50+106+58);
+
+
+  SKSpriteNode * sky = [SKSpriteNode spriteNodeWithImageNamed:@"Skytint2"];
+  [sky setAnchorPoint:CGPointMake(0, 0)];
+  [self addChild:sky];
+  sky.position = CGPointMake(0, 83+50+106+58+28);
+
+
+
   self.scaleMode = SKSceneScaleModeAspectFill;
   [self createContents];
 }
