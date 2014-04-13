@@ -75,6 +75,20 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
   [self.view addSubview:flipButton];
 
+#if DEBUG
+
+  UIButton *addUsageButton = ({
+    UIButton* b = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.view.frame)-20, 20, 20)];
+    b.backgroundColor = [UIColor greenColor];
+    [b addTarget:self action:@selector(incrementUsage) forControlEvents:UIControlEventAllEvents];
+    b;
+  });
+
+
+  [self.view addSubview:addUsageButton];
+#endif
+
+
   NSDictionary *viewsDict = @{@"collectionView": tileViewController.view,
                               @"menuBar":self.topLayoutGuide,
                               // @"donateButton":_donateButton,
@@ -143,5 +157,11 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
     nil;
   }];
 }
+
+#if DEBUG
+-(void)incrementUsage{
+  DLog(@"incrementing usage");
+}
+#endif
 
 @end

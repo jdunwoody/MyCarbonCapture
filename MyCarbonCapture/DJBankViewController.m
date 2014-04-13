@@ -32,7 +32,7 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CELL_IDENTIFIER];
     CALayer *bankViewLayer = self.view.layer;
     bankViewLayer.shadowOpacity = 0.5;
-    bankViewLayer.shadowColor = [[UIColor blueColor] CGColor];
+    bankViewLayer.shadowColor = [[UIColor whiteColor] CGColor];
     bankViewLayer.shadowOffset = CGSizeMake(0, 0);
     bankViewLayer.shadowRadius = 10;
 
