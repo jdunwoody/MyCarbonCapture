@@ -68,13 +68,10 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 }
 
 -(NSFetchedResultsController *)frc {
-  if (_frc) {
-    return _frc;
-  }
+  if (_frc) return _frc;
 
   NSError * error = nil;
-
-  [self seedTrees];
+  //[self seedTrees];
 
   NSFetchRequest * req = [NSFetchRequest fetchRequestWithEntityName:TREE_IDENTITY];
   req.predicate = [NSPredicate predicateWithFormat:@"useIdentifier ==  %d",TreeStorageUsageTypeBank];

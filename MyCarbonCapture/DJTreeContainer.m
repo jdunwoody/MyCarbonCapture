@@ -9,15 +9,18 @@
 #import "DJForestViewController.h"
 #import "DJBankViewController.h"
 #import "DJThermometerView.h"
+#import "DJWifiUsageModel.h"
 
 #import "Masonry.h"
 
 @interface DJTreeContainer ()
-@property (nonatomic,strong) UIButton *donateButton;
+@property (nonatomic, strong) UIButton *donateButton;
 @property (nonatomic, strong) UILabel *gasValueLabel;
-@property (nonatomic,strong) NSMutableArray *treesInBank;
-@property(nonatomic, strong) DJBankViewController *bankViewController;
-@property(nonatomic, strong) DJThermometerView *thermometer;
+@property (nonatomic, strong) NSMutableArray *treesInBank;
+@property (nonatomic, strong) DJBankViewController *bankViewController;
+@property (nonatomic, strong) DJThermometerView *thermometer;
+@property (nonatomic, strong) DJTreeTileCVController *tileViewController;
+@property (nonatomic, strong) UIButton *flipButton;
 @end
 
 @implementation DJTreeContainer
@@ -27,12 +30,11 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
 -(void)viewDidLoad {
 
-  DJTreeTileCVController *tileViewController = [[DJTreeTileCVController alloc] initWithCollectionViewLayout:nil];
-  tileViewController.moc = self.moc;
-  tileViewController.delegate = self;
+  self.tileViewController = [[DJTreeTileCVController alloc] initWithManagedObjectContext:self.moc];
+  self.tileViewController.delegate = self;
 
-  [self.view addSubview:tileViewController.view];
-  tileViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:self.tileViewController.view];
+  self.tileViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
   self.title = @"MyCarbonCapture";
 
   /*
@@ -45,8 +47,8 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
    _donateButton.translatesAutoresizingMaskIntoConstraints = NO;
    */
 
-  [self addChildViewController:tileViewController];
-  [self.view addSubview:tileViewController.view];
+  [self addChildViewController:self.tileViewController];
+  [self.view addSubview:self.tileViewController.view];
   [self.view addSubview:_donateButton];
 
 
@@ -67,13 +69,13 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   self.thermometer = [[DJThermometerView alloc] initWithFrame:CGRectZero];
   [self.view addSubview:self.thermometer];
 
-  UIButton *flipButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+  self.flipButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
 
-  [flipButton addTarget:self
-                 action:@selector(showForest)
-       forControlEvents:UIControlEventTouchUpInside];
+  [self.flipButton addTarget:self
+                      action:@selector(showForest)
+            forControlEvents:UIControlEventTouchUpInside];
 
-  [self.view addSubview:flipButton];
+  [self.view addSubview:self.flipButton];
 
 #if DEBUG
 
@@ -89,14 +91,14 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 #endif
 
 
-  NSDictionary *viewsDict = @{@"collectionView": tileViewController.view,
+  NSDictionary *viewsDict = @{@"collectionView": self.tileViewController.view,
                               @"menuBar":self.topLayoutGuide,
                               // @"donateButton":_donateButton,
                               @"bankView": self.bankViewController.view,
                               @"gasLabel":gasLabel,
-                              @"gasValueLabel":_gasValueLabel,
+                              @"gasValueLabel":self.gasValueLabel,
                               @"thermometer": self.thermometer,
-                              @"flipButton":flipButton
+                              @"flipButton":self.flipButton
                               };
 
   [viewsDict eachValue:^(UIView* value) {
@@ -157,10 +159,13 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
     nil;
   }];
 }
-
+#pragma mark - Debug methods
 #if DEBUG
 -(void)incrementUsage{
   DLog(@"incrementing usage");
+  long usage = [[DJWifiUsageModel sharedInstance] savedNetworkUsage];
+  [self.tileViewController incrementWebUsageWithUsage:usage+1];
+  [[DJWifiUsageModel sharedInstance] persistWebUsage];
 }
 #endif
 

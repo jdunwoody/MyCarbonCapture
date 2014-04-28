@@ -8,7 +8,6 @@
 #import "DJLeavesCollectionViewLayout.h"
 
 @interface DJLeavesCollectionViewLayout ()
-@property (nonatomic) BOOL runBefore;
 @property (nonatomic, strong) UICollectionViewLayoutAttributes *resetAttrs;
 
 @end
@@ -24,7 +23,7 @@
     self.itemSize = CGSizeMake(40,40);
     self.sectionInset = UIEdgeInsetsMake(0,14, 0, 14);
     self.animator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];
-    self.runBefore = NO;
+    //self.runBefore = NO;
   }
   return self;
 }
@@ -34,40 +33,51 @@
   CGSize contentSize = self.collectionView.contentSize;
   NSArray *items = [super layoutAttributesForElementsInRect:CGRectMake(0, 0, contentSize.width, contentSize.height)];
   if (self.animator.behaviors.count == 0) {
-    [items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-      if(self.runBefore) {
-      [(UICollectionViewLayoutAttributes*)obj setAlpha:.1];
-    }
-      UIAttachmentBehavior *behaviour = [[UIAttachmentBehavior alloc] initWithItem:obj attachedToAnchor:[obj center]];
+    [items enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes *attr, NSUInteger idx, BOOL *stop) {
+
+      UIAttachmentBehavior *behaviour = [[UIAttachmentBehavior alloc] initWithItem:attr attachedToAnchor:[attr center]];
 
       behaviour.length = 1.5f;
       behaviour.damping = 0.03f;
       behaviour.frequency = 2.40f;
       [self.animator addBehavior:behaviour];
     }];
-    self.runBefore = YES;
+    // if(self.runBefore) [self resetAlphas];
+    //self.runBefore = YES;
   }
 }
 
+/*
+ -(void)resetAlphas{
+ CGSize contentSize = self.collectionView.contentSize;
+ NSArray *items = [super layoutAttributesForElementsInRect:CGRectMake(0, 0, contentSize.width, contentSize.height)];
+ [items enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes* attr, NSUInteger idx, BOOL *stop) {
+ [attr setAlpha:.1];
+ }];
+ }
+ */
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
   // NSLog(@"We got here:%@",[NSString stringWithCString:__PRETTY_FUNCTION__ encoding:NSASCIIStringEncoding]);
-  NSArray *attrs = [self.animator itemsInRect:rect];
+  NSArray *attrs = [super layoutAttributesForElementsInRect:rect];
+  NSMutableArray *newAttrs = [NSMutableArray new];
   [attrs enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes *attr, NSUInteger idx, BOOL *stop) {
-    if ([attr.indexPath isEqual:self.highlightledIndexPath]) {
-      [self highlightAttributes:attr];
+    UICollectionViewLayoutAttributes *newAttr = [self layoutAttributesForItemAtIndexPath:attr.indexPath];
+    if (newAttr) {
+      [newAttrs addObject:newAttr];
     }
   }];
-  return attrs;
+  return newAttrs;
 }
 
 -(UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
   //NSLog(@"We got here:%@",[NSString stringWithCString:__PRETTY_FUNCTION__ encoding:NSASCIIStringEncoding]);
+  UICollectionViewLayoutAttributes *attr = [self.animator layoutAttributesForCellAtIndexPath:indexPath];
   if ([indexPath isEqual:self.highlightledIndexPath]) {
-    UICollectionViewLayoutAttributes *attr = [self.animator layoutAttributesForCellAtIndexPath:indexPath];
     [self highlightAttributes:attr];
-    return attr;
+  } else {
+    attr.alpha = [(id<LeavesCollectionViewDelegateFlowLayout>) self.collectionView.dataSource alphaForCellAtIndexPath:indexPath];
   }
-  return [self.animator layoutAttributesForCellAtIndexPath:indexPath];
+  return attr;
 }
 
 
@@ -107,14 +117,14 @@
   if (!self.resetAttrs){
     self.resetAttrs = [attr copy];
   }
-  attr.alpha = 1;
+  //attr.alpha = 1;
   attr.transform3D = CATransform3DScale(attr.transform3D, 2.0, 2.0, 0);
   attr.zIndex = INT32_MAX;
   attr.transform = CGAffineTransformMakeScale(1.3, 1.3);
 }
 
 -(void)unhighlightAttributes:(UICollectionViewLayoutAttributes*)attr {
-  attr.alpha = self.resetAttrs.alpha;
+  //  attr.alpha = self.resetAttrs.alpha;
   attr.transform3D = self.resetAttrs.transform3D;
   attr.zIndex = self.resetAttrs.zIndex;
   attr.transform = CGAffineTransformMakeScale(1, 1);

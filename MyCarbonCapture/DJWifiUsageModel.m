@@ -15,8 +15,7 @@
 
 
 @interface DJWifiUsageModel ()
-@property (nonatomic,strong) NSNumber *currentWebUsage;
-@property (nonatomic,strong) NSNumber *lastResetNetworkCount;
+@property (nonatomic) long lastResetNetworkCount;
 @end
 
 @implementation DJWifiUsageModel
@@ -41,27 +40,24 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
 
   dispatch_once(&onceToken, ^{
     wifiModelInstance = [[DJWifiUsageModel alloc] init];
-    wifiModelInstance.currentWebUsage = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_NET_USAGE_KEY];
-    long long latestNetworkReading = wifiModelInstance.networkUsageKB;
+    long latestNetworkReading = wifiModelInstance.latestNetworkUsage;
 
     //Calibrate the app to the system current state
-    wifiModelInstance.lastResetNetworkCount = [[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY];
     if (!wifiModelInstance.lastResetNetworkCount){
       //first time run so we need to calibrate the app counter to work from this point as a 0 point.
-      wifiModelInstance.lastResetNetworkCount = @(latestNetworkReading);
-    } else if (latestNetworkReading < wifiModelInstance.lastResetNetworkCount.longValue){
+      wifiModelInstance.lastResetNetworkCount = latestNetworkReading;
+    } else if (latestNetworkReading < wifiModelInstance.lastResetNetworkCount){
       // The device has been restarted since last app run which has reset the ifConfig counters
       // Therefore the Network Reference needs to be recalibrated.
       // This means some accuracy may be lost between app runs.
       // Set the 'reset' counter to 0 and calculate delta from there since there has been AT LEAST that much net usage between app runs.
-      wifiModelInstance.lastResetNetworkCount = @0;
+      wifiModelInstance.lastResetNetworkCount = 0;
     }
-    [[NSUserDefaults standardUserDefaults] setValue:wifiModelInstance.lastResetNetworkCount forKey:RESET_NETWORK_KEY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    NSLog(@"the currect reset state (used for a reference in calculations): %@",[[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY]);
 
-    NSLog(@"The saved usage was %@",[[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_NET_USAGE_KEY]);
+
+    NSLog(@"the currect reset state (used for a reference in calculations): %ld", [wifiModelInstance lastResetNetworkCount]);
+
+    NSLog(@"The saved usage was %ld", [wifiModelInstance savedNetworkUsage]);
 
     NSLog(@"Dollars cost Per CO2g: $%f",wifiModelInstance.costPerCO2g);
     NSLog(@"CO2 grams Per Byte: %f grams",wifiModelInstance.co2gPerByte);
@@ -83,12 +79,12 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
 }
 
 -(double)co2gPerByte {
-  //Convert GB to Byte
-  return KWH_PER_GB * CO2G_PER_KWH / 1024 / 1024 / 1024;
+  //Convert GB to kByte
+  return KWH_PER_GB * CO2G_PER_KWH / 1024 / 1024;
 }
 
 #pragma mark - get data usage
--(long long)networkUsageKB {
+-(long)latestNetworkUsage {
   struct ifaddrs *addrs;
   const struct ifaddrs *addr_cursor;
   const struct if_data *networkStats;
@@ -96,25 +92,43 @@ static double DOLLAR_COST_CO2_PER_TON = 23;
   if (getifaddrs(&addrs) == 0){
     addr_cursor = addrs;
     while (addr_cursor != NULL){
-      if (addr_cursor->ifa_addr->sa_family == AF_LINK && !(addr_cursor->ifa_flags & IFF_LOOPBACK)){
+      if (addr_cursor->ifa_flags && IFF_UP &&
+          addr_cursor->ifa_addr->sa_family == AF_LINK &&
+          !(addr_cursor->ifa_flags & IFF_LOOPBACK)){
+
         networkStats = (const struct if_data *) addr_cursor->ifa_data;
         //NSLog(@"the network interface is %s, inBytes : %d, obytes : %d",addr_cursor->ifa_name, networkStats->ifi_ibytes, networkStats->ifi_obytes);
         traffic+= networkStats->ifi_obytes + networkStats->ifi_ibytes;
+
       }
       addr_cursor = addr_cursor->ifa_next;
     }
     freeifaddrs(addrs);
   }
   // NSLog(@"The total traffic is %d",traffic);
-  return traffic / 1024;
-}
-
--(void)persistWebUsage {
-  [[NSUserDefaults standardUserDefaults] setValue:@([self networkUsageKB]) forKey:CURRENT_NET_USAGE_KEY];
+  return traffic;
 }
 
 -(void)refreshNetworkStats {
 
+}
+
+-(void)persistWebUsage {
+  [[NSUserDefaults standardUserDefaults] setValue:@([self latestNetworkUsage]) forKey:CURRENT_NET_USAGE_KEY];
+}
+
+-(long)savedNetworkUsage{
+  return [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_NET_USAGE_KEY];
+}
+
+
+- (long )lastResetNetworkCount {
+  return [[[NSUserDefaults standardUserDefaults] valueForKey:RESET_NETWORK_KEY] longValue];
+}
+
+- (void)setLastResetNetworkCount:(long)lastResetNetworkCount {
+  [[NSUserDefaults standardUserDefaults] setValue:@(lastResetNetworkCount) forKey:RESET_NETWORK_KEY];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

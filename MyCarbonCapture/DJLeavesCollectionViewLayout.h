@@ -13,7 +13,15 @@
 @property (nonatomic, strong) UIDynamicAnimator * animator;
 
 
+
 -(void) highlightAttributes:(UICollectionViewLayoutAttributes*) attr;
--(void)unhighlightAttributes:(UICollectionViewLayoutAttributes*)attr;
+-(void) unhighlightAttributes:(UICollectionViewLayoutAttributes*)attr;
+
+
+@end
+
+@protocol LeavesCollectionViewDelegateFlowLayout <UICollectionViewDelegateFlowLayout>
+
+-(float)alphaForCellAtIndexPath:(NSIndexPath*)indexPath;
 
 @end

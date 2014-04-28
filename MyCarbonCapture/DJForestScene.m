@@ -57,6 +57,7 @@
 
 
 -(void)createContents {
+  self.backgroundColor = [UIColor whiteColor];
   NSError * error = nil;
   NSFetchRequest *req = [[NSFetchRequest alloc] initWithEntityName:@"Tree"];
   req.predicate = [NSPredicate predicateWithFormat:@"useIdentifier == %d",TreeStorageUsageTypeForest];

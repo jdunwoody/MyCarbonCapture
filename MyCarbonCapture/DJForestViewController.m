@@ -13,7 +13,7 @@
 
 @interface DJForestViewController ()
 
-@property (nonatomic, strong) DJBankViewController *tileViewController;
+@property (nonatomic, strong) DJBankViewController *bankViewController;
 @property (nonatomic, strong) UIButton *selectorButton;
 @property (nonatomic, strong) MASConstraint *selectorWidth;
 @end
@@ -49,22 +49,22 @@
   [self.view addSubview:self.selectorButton];
 
   //Add the bank view to display pending trees
-  self.tileViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
-  self.tileViewController.moc = self.moc;
-  [self addChildViewController:self.tileViewController];
-  [self.view addSubview:self.tileViewController.view];
+  self.bankViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
+  self.bankViewController.moc = self.moc;
+  [self addChildViewController:self.bankViewController];
+  [self.view addSubview:self.bankViewController.view];
 
   [backButton makeConstraints:^(MASConstraintMaker *make) {
     make.right.equalTo(self.view.right).offset(-20);
     make.bottom.equalTo(self.bottomLayoutGuide).offset(-20);
   }];
-  [self.tileViewController.view makeConstraints:^(MASConstraintMaker *make) {
+  [self.bankViewController.view makeConstraints:^(MASConstraintMaker *make) {
     make.bottom.equalTo(self.view.bottom).offset(-40);
     make.left.equalTo(self.view.left);
   }];
   [self.selectorButton makeConstraints:^(MASConstraintMaker *make) {
-    make.left.equalTo(self.tileViewController.view.right);
-    make.centerY.equalTo(self.tileViewController.view.centerY);
+    make.left.equalTo(self.bankViewController.view.right);
+    make.centerY.equalTo(self.bankViewController.view.centerY);
   }];
 }
 
@@ -76,14 +76,14 @@
 #pragma mark  - Forest delegate
 
 - (void)forestDidUpdateTreeCollection {
-  [self.tileViewController refreshBankViewCollection];
+  [self.bankViewController refreshBankViewCollection];
 }
 
 -(void)toggleSelectorView{
   CGAffineTransform transform;
 
-  if (CGRectGetWidth(self.tileViewController.view.frame) < 100){
-    [self.tileViewController.view makeConstraints:^(MASConstraintMaker *make) {
+  if (CGRectGetWidth(self.bankViewController.view.frame) < 100){
+    [self.bankViewController.view makeConstraints:^(MASConstraintMaker *make) {
       self.selectorWidth = make.width.equalTo(@250);
     }];
     transform = CGAffineTransformMakeRotation(M_PI);

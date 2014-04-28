@@ -17,6 +17,13 @@
 
 @interface DJTreeTileCVController : UICollectionViewController
 @property (nonatomic,weak) id<DJTreeTileCVControllerDelegate> delegate;
-@property ( nonatomic,strong) NSManagedObjectContext * moc;
+@property (nonatomic,strong) NSManagedObjectContext * moc;
+
+-(void)incrementWebUsageWithUsage:(long)usage;
+
+//initializer
+
+-(id)initWithManagedObjectContext:(NSManagedObjectContext*)moc;
+
 
 @end
