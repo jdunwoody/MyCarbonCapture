@@ -25,7 +25,7 @@
 @property (nonatomic, strong) DJLeavesCollectionViewLayout *leavesLayout;
 @property (nonatomic,strong) DJFactShareViewController *factViewController;
 @property (nonatomic, strong) NSFetchedResultsController *frc;
-
+@property (nonatomic) float treeGrowth;
 @end
 
 @implementation DJTreeTileCVController
@@ -53,18 +53,12 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 }
 
 -(void)resetCells{
-  DLog();
   _incompletCells = [NSMutableArray array];
-
   [self.frc.fetchedObjects enumerateObjectsUsingBlock:^(Tile* tile, NSUInteger idx, BOOL *stop) {
     tile.alpha = 0.1;
     NSLog(@"The index being inserted is %lu",(unsigned long)idx);
     [_incompletCells addObject:@(idx)];
-
   }];
-
-  //  [self.leavesLayout resetAlphas];
-  // [self.collectionView.collectionViewLayout prepareLayout];
   [self.collectionView reloadData];
 }
 
@@ -85,9 +79,6 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   [super viewDidAppear:animated];
   [self.collectionViewLayout invalidateLayout];
   [DJWifiUsageModel sharedInstance];
-
-  //Bring the tree up to it's previous stage of growth after a restart
-  // [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(restoreTree) userInfo:nil repeats:NO]; // Schedule Restore until after the the view has been all loaded
   self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
   [self.webCheckTimer fire];
 }
@@ -102,7 +93,6 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   long newWebUsage = [[DJWifiUsageModel sharedInstance] latestNetworkUsage];
 
   if(ABS(newWebUsage - self.currWebUsage) > ANIMATION_STEP_THRESHOLD){
-    //if(YES){ //this is a short cut for the demo
     self.currWebUsage = newWebUsage;
     [self incrementWebUsageWithUsage:newWebUsage];
   }
@@ -114,34 +104,15 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     [self.delegate didIncreaseUsageStats:usage];
   } else {
     NSLog(@"this is the end of the tree growth");
-    [self addNewTree];
-    //[self.webCheckTimer invalidate];
+    [self.delegate didCompleteTree];
     [self resetCells];
+    self.treeGrowth = 0;
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:CURRENT_TREE_PROGRESS_KEY];
 
     [[DJWifiUsageModel sharedInstance] persistWebUsage];
   }
-}
-
-
--(void)addNewTree {
-  DLog();
-  unsigned ranNum = arc4random_uniform(4);
-  NSError *error = nil;
-  Tree * tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
-  NSString * selectName = [NSString stringWithFormat:@"TreeSelect%d",ranNum];
-  tree.imageSelect = [UIImage imageNamed:selectName];
-  DLog(@"selectName is %@",selectName);
-  NSString *hoverName = [NSString stringWithFormat:@"TreeHover%d",ranNum];
-  DLog(@"hoverName is %@",hoverName);
-  tree.imageHover = [UIImage imageNamed:hoverName];
-  tree.largeImage = [UIImage imageNamed:[NSString stringWithFormat:@"Tree%d-w250px",ranNum]];
-  tree.name = [NSString stringWithFormat:@"The tree name is tree%d",ranNum];
-  tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",ranNum];
-  tree.useIdentifier = TreeStorageUsageTypeBank;
-  [self.moc save:&error];
-  if (error)
-    NSLog(@"The found error is %@",error);
+  self.treeGrowth++;
+  [self.delegate treeDidGrowToAmount:(float)self.treeGrowth / (NUM_CELLs * 10)];
 }
 
 -(void)growTree{
@@ -160,21 +131,9 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     [self incrementWebUsageWithUsage:self.currWebUsage];
   } else {
     tile.alpha = tile.alpha + .1;
-    //NSIndexPath *path = [NSIndexPath indexPathForRow:randNumber inSection:0];
-    [self.moc save:nil];
-    //[self.collectionView reloadItemsAtIndexPaths:@[path]];
     [self.collectionView.collectionViewLayout invalidateLayout];
-    //  NSLog(@"the count left is %lu from tile:%@ at index: %ld alpha is %f",(unsigned long)self.incompletCells.count,tile, (long)path.row,[(UICollectionViewCell*)self.collectionView.visibleCells[path.row] backgroundView].alpha);
   }
 }
-
-
-//-(void)restoreTree {
-//  self.currentTreeGrowth = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_TREE_PROGRESS_KEY];
-//  for (unsigned i = 1; i < self.currentTreeGrowth; i++) {
-//    [self growTree];
-//  }
-//}
 
 #pragma mark - UICollectionview methods
 
@@ -311,14 +270,14 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   NSError * error = nil;
   [self.frc performFetch:&error];
   [self.collectionView reloadData];
-  
+
 }
 
 
-#pragma mark - Alpha for cell 
+#pragma mark - Alpha for cell
 -(float)alphaForCellAtIndexPath:(NSIndexPath *)indexPath{
   return [(Tile*)[self.frc objectAtIndexPath:indexPath] alpha];
-
+  
 }
 
 

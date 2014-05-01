@@ -10,6 +10,7 @@
 #import "DJBankViewController.h"
 #import "DJThermometerView.h"
 #import "DJWifiUsageModel.h"
+#import "Tree+_StorageType.h"
 
 #import "Masonry.h"
 
@@ -21,10 +22,12 @@
 @property (nonatomic, strong) DJThermometerView *thermometer;
 @property (nonatomic, strong) DJTreeTileCVController *tileViewController;
 @property (nonatomic, strong) UIButton *flipButton;
+@property (nonatomic) float thermometerGrowth;
 @end
 
 @implementation DJTreeContainer
 static NSByteCountFormatter *byteFormatter;
+#define THERMOMETER_SCALE 10
 
 static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
@@ -126,21 +129,52 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   }
 
   self.gasValueLabel.text = [byteFormatter stringFromByteCount:kilobytes];
-  self.thermometer.level += .01;
 }
+
 
 -(void)viewWillAppear:(BOOL)animated{
   [self.bankViewController refreshBankViewCollection];
 }
 
 
--(void)didReachMaxStats {
+-(void)didCompleteTree {
+  [self addNewTree];
+  [self.bankViewController refreshBankViewCollection];
+  self.thermometerGrowth += 1;
 
 }
 
 -(void)didResetStats{
 
 }
+
+-(void)treeDidGrowToAmount:(float)amount{
+  self.thermometer.level =  self.thermometerGrowth / THERMOMETER_SCALE + .1 * amount;
+
+}
+
+#pragma - Tree Management
+
+-(void)addNewTree {
+  DLog();
+  unsigned ranNum = arc4random_uniform(4);
+  NSError *error = nil;
+  Tree * tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
+  NSString * selectName = [NSString stringWithFormat:@"TreeSelect%d",ranNum];
+  tree.imageSelect = [UIImage imageNamed:selectName];
+  DLog(@"selectName is %@",selectName);
+  NSString *hoverName = [NSString stringWithFormat:@"TreeHover%d",ranNum];
+  DLog(@"hoverName is %@",hoverName);
+  tree.imageHover = [UIImage imageNamed:hoverName];
+  tree.largeImage = [UIImage imageNamed:[NSString stringWithFormat:@"Tree%d-w250px",ranNum]];
+  tree.name = [NSString stringWithFormat:@"The tree name is tree%d",ranNum];
+  tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",ranNum];
+  tree.useIdentifier = TreeStorageUsageTypeBank;
+  [self.moc save:&error];
+  if (error)
+    NSLog(@"Error While adding a new tree: %@",error);
+}
+
 
 #pragma mark - Donate Now
 

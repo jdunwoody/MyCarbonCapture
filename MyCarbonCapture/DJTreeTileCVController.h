@@ -9,8 +9,9 @@
 
 @protocol DJTreeTileCVControllerDelegate <NSObject>
 -(void)didIncreaseUsageStats:(long long)kilobytes;
--(void)didReachMaxStats;
+-(void)didCompleteTree;
 -(void)didResetStats;
+-(void)treeDidGrowToAmount:(float)amount;
 
 @end
 
