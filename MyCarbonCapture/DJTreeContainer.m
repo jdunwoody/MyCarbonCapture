@@ -64,8 +64,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   self.view.backgroundColor = [UIColor whiteColor];
 
 
-  self.bankViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
-  self.bankViewController.moc = self.moc;
+  self.bankViewController = [[DJBankViewController alloc] initWithManagedObjectContext:self.moc];
   [self addChildViewController:self.bankViewController];
   [self.view addSubview:self.bankViewController.view];
 
@@ -127,7 +126,6 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   if (!byteFormatter) {
     byteFormatter = [[NSByteCountFormatter alloc] init];
   }
-
   self.gasValueLabel.text = [byteFormatter stringFromByteCount:kilobytes];
 }
 
@@ -141,7 +139,6 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   [self addNewTree];
   [self.bankViewController refreshBankViewCollection];
   self.thermometerGrowth += 1;
-
 }
 
 -(void)didResetStats{

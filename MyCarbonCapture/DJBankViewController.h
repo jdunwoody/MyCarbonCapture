@@ -13,4 +13,7 @@
 @property(nonatomic,strong) NSFetchedResultsController * frc;
 
 -(void)refreshBankViewCollection;
+
+-(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
+
 @end

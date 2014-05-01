@@ -8,21 +8,20 @@
 
 #import "DJBankViewController.h"
 #import "Tree+_StorageType.h"
+#import <Masonry.h>
 
 @interface DJBankViewController ()
-
 
 @end
 
 @implementation DJBankViewController
 static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 
-
-
--(id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+-(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc{
   UICollectionViewFlowLayout *gridLayout = [[UICollectionViewFlowLayout alloc] init];
   self = [super initWithCollectionViewLayout:gridLayout];
   if (self) {
+    self.moc = moc;
     gridLayout.itemSize = CGSizeMake(23, 33);
     gridLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [gridLayout setSectionInset:UIEdgeInsetsMake(5, 5, 10, 5)];
@@ -40,19 +39,13 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
   return self;
 }
 
-- (void)viewDidLoad
-{
-  [super viewDidLoad];
+-(void)updateViewConstraints{
   self.view.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[selfView(48)]" options:0 metrics:nil views:@{@"selfView":self.view}]];
-
-
+  [self.view makeConstraints:^(MASConstraintMaker *make) {
+    make.height.equalTo(@48);
+  }];
+  [super updateViewConstraints];
 }
-
--(void)viewDidAppear:(BOOL)animated {
-
-}
-
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
@@ -63,7 +56,6 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
   id <NSFetchedResultsSectionInfo> sectionInfo = [[self.frc sections] objectAtIndex:section];
-  NSLog(@"the count of kck is %lu",(unsigned long)[sectionInfo numberOfObjects]);
   return [sectionInfo numberOfObjects];
 }
 
@@ -71,7 +63,6 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
   if (_frc) return _frc;
 
   NSError * error = nil;
-  //[self seedTrees];
 
   NSFetchRequest * req = [NSFetchRequest fetchRequestWithEntityName:TREE_IDENTITY];
   req.predicate = [NSPredicate predicateWithFormat:@"useIdentifier ==  %d",TreeStorageUsageTypeBank];
@@ -90,33 +81,14 @@ static NSString *CELL_IDENTIFIER = @"CELL_IDENTIFER";
   if (![_frc performFetch:&error]) {
     abort();
   }
-
   return _frc;
-}
-
--(void)seedTrees {
-  NSError *error = nil;
-  Tree * tree = nil;
-  for (int i = 1; i <=4; i++) {
-
-    tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
-    tree.imageSelect = [UIImage imageNamed:[NSString stringWithFormat:@"TreeSelect%d",i]];
-    tree.largeImage = [UIImage imageNamed:[NSString stringWithFormat:@"Tree%d-w250px",i]];
-    tree.imageHover = [UIImage imageNamed:[NSString stringWithFormat:@"TreeHover%d",i]];
-    tree.name = [NSString stringWithFormat:@"The tree name is tree%d",i];
-    tree.info = [NSString stringWithFormat:@"The tree infomation is tree %d",i];
-    tree.useIdentifier = TreeStorageUsageTypeBank;
-  }
-  [self.moc save:&error];
-  if (error)
-    NSLog(@"The found error is %@",error);
 }
 
 -(void)refreshBankViewCollection {
   NSError * error = nil;
   [self.frc performFetch:&error];
   [self.collectionView reloadData];
-
+  
 }
 
 @end

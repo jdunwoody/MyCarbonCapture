@@ -10,8 +10,6 @@
 #import <SpriteKit/SpriteKit.h>
 #import "DJForestScene.h"
 
-@class DJBankViewController;
-
 @interface DJForestViewController : UIViewController <DJForestControllerUpdateDelegate>
 @property (nonatomic,strong) NSManagedObjectContext * moc;
 

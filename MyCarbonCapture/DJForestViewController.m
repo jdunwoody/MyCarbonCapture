@@ -49,7 +49,7 @@
   [self.view addSubview:self.selectorButton];
 
   //Add the bank view to display pending trees
-  self.bankViewController = [[DJBankViewController alloc] initWithCollectionViewLayout:nil];
+  self.bankViewController = [[DJBankViewController alloc] initWithManagedObjectContext:self.moc];
   self.bankViewController.moc = self.moc;
   [self addChildViewController:self.bankViewController];
   [self.view addSubview:self.bankViewController.view];
