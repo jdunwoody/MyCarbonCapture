@@ -140,6 +140,9 @@
 
     CGFloat newConst = _level * self.thermBG.frame.size.width - 1;
 
+    if (newConst < 1) {
+      newConst = 1;
+    }
     self.maskConstraint.constant = newConst;
   [self layoutIfNeeded];
   }
