@@ -23,6 +23,7 @@
 @property (nonatomic, strong) DJTreeTileCVController *tileViewController;
 @property (nonatomic, strong) UIButton *flipButton;
 @property (nonatomic) float thermometerGrowth;
+@property (nonatomic, strong) UILabel *gasLabel;
 @end
 
 @implementation DJTreeContainer
@@ -33,11 +34,11 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
 -(void)viewDidLoad {
 
-  self.tileViewController = [[DJTreeTileCVController alloc] initWithManagedObjectContext:self.moc];
-  self.tileViewController.delegate = self;
+  _tileViewController = [[DJTreeTileCVController alloc] initWithManagedObjectContext:self.moc];
+  _tileViewController.delegate = self;
 
   [self.view addSubview:self.tileViewController.view];
-  self.tileViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+  _tileViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
   self.title = @"MyCarbonCapture";
 
   /*
@@ -55,29 +56,30 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   [self.view addSubview:_donateButton];
 
 
-  UILabel *gasLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  gasLabel.text = @"My CO2 emissions are:";
-  self.gasValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _gasLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _gasLabel.text = @"My CO2 emissions are:";
+  _gasValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 
-  [self.view addSubview:gasLabel];
-  [self.view addSubview:self.gasValueLabel];
+  [self.view addSubview:_gasLabel];
+  [self.view addSubview:_gasValueLabel];
   self.view.backgroundColor = [UIColor whiteColor];
 
 
-  self.bankViewController = [[DJBankViewController alloc] initWithManagedObjectContext:self.moc];
-  [self addChildViewController:self.bankViewController];
-  [self.view addSubview:self.bankViewController.view];
+  _bankViewController = [[DJBankViewController alloc] initWithManagedObjectContext:self.moc];
+  [self addChildViewController:_bankViewController];
+  [self.view addSubview:_bankViewController.view];
 
-  self.thermometer = [[DJThermometerView alloc] initWithFrame:CGRectZero];
-  [self.view addSubview:self.thermometer];
+  _thermometer = [[DJThermometerView alloc] initWithFrame:CGRectZero];
+  _thermometer.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_thermometer];
 
-  self.flipButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+  _flipButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
 
-  [self.flipButton addTarget:self
-                      action:@selector(showForest)
-            forControlEvents:UIControlEventTouchUpInside];
+  [_flipButton addTarget:self
+                  action:@selector(showForest)
+        forControlEvents:UIControlEventTouchUpInside];
 
-  [self.view addSubview:self.flipButton];
+  [self.view addSubview:_flipButton];
 
 #if DEBUG
 
@@ -88,16 +90,16 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
     b;
   });
 
-
   [self.view addSubview:addUsageButton];
 #endif
+}
 
-
+-(void)updateViewConstraints{
   NSDictionary *viewsDict = @{@"collectionView": self.tileViewController.view,
                               @"menuBar":self.topLayoutGuide,
                               // @"donateButton":_donateButton,
                               @"bankView": self.bankViewController.view,
-                              @"gasLabel":gasLabel,
+                              @"gasLabel":self.gasLabel,
                               @"gasValueLabel":self.gasValueLabel,
                               @"thermometer": self.thermometer,
                               @"flipButton":self.flipButton
@@ -106,7 +108,6 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   [viewsDict eachValue:^(UIView* value) {
     value.translatesAutoresizingMaskIntoConstraints = NO;
   }];
-
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[collectionView]-[gasValueLabel][thermometer]-[bankView]-|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[gasLabel][gasValueLabel]" options:NSLayoutFormatAlignAllCenterY metrics:0 views:viewsDict]];
@@ -117,9 +118,11 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[donateButton]-20-|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
+  [super updateViewConstraints];
+
 }
 
-#pragma mark - CollectionViewDelegates
+#pragma mark - TileViewCollectionViewDelegates
 -(void)didIncreaseUsageStats:(long long)kilobytes {
   self.donateButton.alpha +=.01;
 
@@ -133,7 +136,6 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 -(void)viewWillAppear:(BOOL)animated{
   [self.bankViewController refreshBankViewCollection];
 }
-
 
 -(void)didCompleteTree {
   [self addNewTree];
@@ -151,9 +153,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 }
 
 #pragma - Tree Management
-
 -(void)addNewTree {
-  DLog();
   unsigned ranNum = arc4random_uniform(4);
   NSError *error = nil;
   Tree * tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
