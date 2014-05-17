@@ -47,18 +47,18 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     self.leavesLayout = (DJLeavesCollectionViewLayout*)self.collectionViewLayout;
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor whiteColor];
-    [self resetCells];
   }
   return self;
 }
 
 -(void)resetCells{
-  _incompletCells = [NSMutableArray array];
   [self.frc.fetchedObjects enumerateObjectsUsingBlock:^(Tile* tile, NSUInteger idx, BOOL *stop) {
     tile.alpha = 0.1;
     NSLog(@"The index being inserted is %lu",(unsigned long)idx);
     [_incompletCells addObject:@(idx)];
   }];
+  [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
+
   [self.collectionView reloadData];
 }
 
@@ -67,7 +67,6 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   [super viewDidLoad];
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:CellIdentifier];
-  [self seedTiles];
 
 }
 
@@ -79,14 +78,27 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   [super viewDidAppear:animated];
   [self.collectionViewLayout invalidateLayout];
   [DJWifiUsageModel sharedInstance];
-  self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
-  [self.webCheckTimer fire];
+  _incompletCells = [[NSUserDefaults standardUserDefaults] objectForKey:INCOMPLETE_CELLS_KEY];
+  NSLog(@"Incimplete Cells is %@",_incompletCells);
+  _treeGrowth = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_TREE_PROGRESS_KEY];
+  if (!_incompletCells) {
+    NSLog(@"Creating the Incimplete Cells is %@",_incompletCells);
+    [self seedTiles];
+
+    _incompletCells = [NSMutableArray array];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      [self resetCells];
+    });
+  }
+  //  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+  //    self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
+  //    [self.webCheckTimer fire];
+  //  });
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
   [self.webCheckTimer invalidate];
-  [[NSUserDefaults standardUserDefaults] setInteger:self.currentTreeGrowth forKey:CURRENT_TREE_PROGRESS_KEY];
-  [[DJWifiUsageModel sharedInstance] persistWebUsage];
 }
 
 -(void)checkDataUsage{
@@ -99,7 +111,7 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 }
 
 -(void)incrementWebUsageWithUsage:(long)usage{
-  if (self.incompletCells.lastObject != nil) {
+  if ([self.incompletCells count] > 0) {
     [self growTree];
     [self.delegate didIncreaseUsageStats:usage];
   } else {
@@ -112,7 +124,18 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     [[DJWifiUsageModel sharedInstance] persistWebUsage];
   }
   self.treeGrowth++;
-  [self.delegate treeDidGrowToAmount:(float)self.treeGrowth / (NUM_CELLs * 10)];
+  float amount = ((float)self.treeGrowth) / (NUM_CELLs * 10);
+  NSLog(@"the tree growth is %f amount is %f",_treeGrowth,amount );
+  [[NSUserDefaults standardUserDefaults] setInteger:self.treeGrowth forKey:CURRENT_TREE_PROGRESS_KEY];
+  [[DJWifiUsageModel sharedInstance] persistWebUsage];
+
+
+  [self.delegate treeDidGrowToAmount:amount];
+  if (amount > 1) {
+    self.treeGrowth = 0;
+    [self.incompletCells removeAllObjects];
+  }
+
 }
 
 -(void)growTree{
@@ -128,6 +151,7 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
   if (tile.alpha >= 1) {
     [self.incompletCells removeObjectAtIndex:randNumber];
+    [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
     [self incrementWebUsageWithUsage:self.currWebUsage];
   } else {
     tile.alpha = tile.alpha + .1;
@@ -252,6 +276,8 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
   return _frc;
 }
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+}
 
 
 -(void)seedTiles {
@@ -260,10 +286,16 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   for (int i = 0; i < NUM_CELLs; i++) {
     tile = [NSEntityDescription insertNewObjectForEntityForName:@"Tile" inManagedObjectContext:self.moc];
     tile.index = i;
+    tile.alpha = 0.1;
+    [_incompletCells addObject:@(i)];
+
   }
+  [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
+
   [self.moc save:&error];
   if (error)
     NSLog(@"The found error is %@",error);
+  [self.collectionView reloadData];
 }
 
 -(void)refreshTileViewCollection {

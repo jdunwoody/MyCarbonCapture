@@ -16,7 +16,8 @@
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   DJTreeContainer *treeContainer = [[DJTreeContainer alloc] initWithNibName:nil bundle:nil];
-  treeContainer.moc = [DJCoredataStack createNewCoreDataStack];
+  self.moc = [DJCoredataStack createNewCoreDataStack];
+  treeContainer.moc = self.moc;
 
   NSLog(@"The MOC is %@",treeContainer.moc);
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:treeContainer];
@@ -29,6 +30,12 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+  NSError *error = nil;
+  [self.moc save:&error];
+  if (error) {
+    NSLog(@"Error saving the MOC %@",error.userInfo);
+  }
+  [[NSUserDefaults standardUserDefaults] synchronize];
   // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
   // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }

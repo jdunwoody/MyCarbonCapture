@@ -29,6 +29,7 @@
 @implementation DJTreeContainer
 static NSByteCountFormatter *byteFormatter;
 #define THERMOMETER_SCALE 10
+#define THERMOMETER_GROWTH_KEY @"thermometerGrowth"
 
 static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
@@ -135,12 +136,17 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
 -(void)viewWillAppear:(BOOL)animated{
   [self.bankViewController refreshBankViewCollection];
+
+}
+-(void)viewDidAppear:(BOOL)animated{
+  _thermometer.level = [[NSUserDefaults standardUserDefaults] floatForKey:THERMOMETER_GROWTH_KEY];
 }
 
 -(void)didCompleteTree {
   [self addNewTree];
   [self.bankViewController refreshBankViewCollection];
-  self.thermometerGrowth += 1;
+  //self.thermometerGrowth += 1;
+//  [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithFloat:self.thermometerGrowth] forKey:THERMOMETER_GROWTH_KEY];
 }
 
 -(void)didResetStats{
@@ -148,7 +154,14 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 }
 
 -(void)treeDidGrowToAmount:(float)amount{
-  self.thermometer.level =  self.thermometerGrowth / THERMOMETER_SCALE + .1 * amount;
+  //The thermometer equates to 10 trees amount is from 0 - 1 for a tree
+  float calcGrowth = floorf([[NSUserDefaults standardUserDefaults] floatForKey:THERMOMETER_GROWTH_KEY] * 10);
+  float resultGrowth = (calcGrowth + amount) * 0.1;
+
+  NSLog(@"The amount of growth is %f with calcGrowth of %f with result: %f",amount, calcGrowth,resultGrowth);
+  //the Thermometer goes from 0 to 10
+  self.thermometer.level =  resultGrowth;
+  [[NSUserDefaults standardUserDefaults] setFloat:resultGrowth forKey:THERMOMETER_GROWTH_KEY];
 
 }
 

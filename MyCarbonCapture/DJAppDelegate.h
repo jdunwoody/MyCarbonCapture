@@ -13,5 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DJCoredataStack *coredataStack;
+@property (nonatomic, strong) NSManagedObjectContext *moc;
+
 
 @end

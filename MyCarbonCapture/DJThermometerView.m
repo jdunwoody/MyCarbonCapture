@@ -63,73 +63,79 @@
     [self addSubview:self.maskBar];
     [self bringSubviewToFront:self.maskBar];
     self.maskBar.backgroundColor = [UIColor whiteColor];
-
-    [self.subviews enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
-      view.translatesAutoresizingMaskIntoConstraints = NO;
-    }];
-
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_thermBG,_scaleStart,_scaleMiddle,_scaleEnd,_co2LabelStart,_co2LabelMiddle,_co2LabelEnd,_maskBar);
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_thermBG]-20-|"
-                                                                 options:0 metrics:nil
-                                                                   views:viewsDict]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_scaleStart][_thermBG][_co2LabelStart]|"
-                                                                 options:0 metrics:nil
-                                                                   views:viewsDict]];
-
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.scaleStart attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeLeft
-                                                    multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.co2LabelStart attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeLeft
-                                                    multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.scaleMiddle attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.co2LabelMiddle attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.scaleEnd attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeRight
-                                                    multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.co2LabelEnd attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeRight
-                                                    multiplier:1 constant:0]];
-
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_scaleStart]->=20-[_scaleMiddle]->=20-[_scaleEnd]"
-                                                                 options:NSLayoutFormatAlignAllCenterY
-                                                                 metrics:nil
-                                                                   views:viewsDict]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_co2LabelStart]->=20-[_co2LabelMiddle]->=20-[_co2LabelEnd]"
-                                                                 options:NSLayoutFormatAlignAllCenterY
-                                                                 metrics:nil
-                                                                   views:viewsDict]];
-
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeRight
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeRight
-                                                    multiplier:1 constant:-0.5]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeTop
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeTop
-                                                    multiplier:1 constant:9]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeBottom
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.thermBG attribute:NSLayoutAttributeBottom
-                                                    multiplier:1 constant:-1]];
-    self.maskConstraint = [NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeLeft
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:self.thermBG attribute:NSLayoutAttributeLeft
-                                                      multiplier:1 constant:1];
-    [self addConstraint:self.maskConstraint];
-    
   }
   return self;
+}
+
++(BOOL)requiresConstraintBasedLayout {
+  return YES;
+}
+
+-(void)updateConstraints{
+  [self.subviews enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+  }];
+
+  NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_thermBG,_scaleStart,_scaleMiddle,_scaleEnd,_co2LabelStart,_co2LabelMiddle,_co2LabelEnd,_maskBar);
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_thermBG]-20-|"
+                                                               options:0 metrics:nil
+                                                                 views:viewsDict]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_scaleStart][_thermBG][_co2LabelStart]|"
+                                                               options:0 metrics:nil
+                                                                 views:viewsDict]];
+
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.scaleStart attribute:NSLayoutAttributeCenterX
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeLeft
+                                                  multiplier:1 constant:0]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.co2LabelStart attribute:NSLayoutAttributeCenterX
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeLeft
+                                                  multiplier:1 constant:0]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.scaleMiddle attribute:NSLayoutAttributeCenterX
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeCenterX
+                                                  multiplier:1 constant:0]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.co2LabelMiddle attribute:NSLayoutAttributeCenterX
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeCenterX
+                                                  multiplier:1 constant:0]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.scaleEnd attribute:NSLayoutAttributeCenterX
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeRight
+                                                  multiplier:1 constant:0]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.co2LabelEnd attribute:NSLayoutAttributeCenterX
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeRight
+                                                  multiplier:1 constant:0]];
+
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_scaleStart]->=20-[_scaleMiddle]->=20-[_scaleEnd]"
+                                                               options:NSLayoutFormatAlignAllCenterY
+                                                               metrics:nil
+                                                                 views:viewsDict]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_co2LabelStart]->=20-[_co2LabelMiddle]->=20-[_co2LabelEnd]"
+                                                               options:NSLayoutFormatAlignAllCenterY
+                                                               metrics:nil
+                                                                 views:viewsDict]];
+
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeRight
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeRight
+                                                  multiplier:1 constant:-0.5]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeTop
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeTop
+                                                  multiplier:1 constant:9]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeBottom
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self.thermBG attribute:NSLayoutAttributeBottom
+                                                  multiplier:1 constant:-1]];
+  self.maskConstraint = [NSLayoutConstraint constraintWithItem:self.maskBar attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.thermBG attribute:NSLayoutAttributeLeft
+                                                    multiplier:1 constant:1];
+  [self addConstraint:self.maskConstraint];
+  [super updateConstraints];
 }
 
 -(void)setLevel:(CGFloat)level {

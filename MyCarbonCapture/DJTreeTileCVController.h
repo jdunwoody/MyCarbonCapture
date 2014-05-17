@@ -11,9 +11,12 @@
 -(void)didIncreaseUsageStats:(long long)kilobytes;
 -(void)didCompleteTree;
 -(void)didResetStats;
+//amount a tree has grown - 0: new tree 1: fully grown
 -(void)treeDidGrowToAmount:(float)amount;
 
 @end
+
+#define INCOMPLETE_CELLS_KEY @"InCompleteCells"
 
 
 @interface DJTreeTileCVController : UICollectionViewController
