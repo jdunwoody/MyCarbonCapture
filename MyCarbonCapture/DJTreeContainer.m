@@ -106,8 +106,8 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
                               @"flipButton":self.flipButton
                               };
 
-  [viewsDict eachValue:^(UIView* value) {
-    value.translatesAutoresizingMaskIntoConstraints = NO;
+  [viewsDict enumerateKeysAndObjectsUsingBlock:^(id key, UIView* view, BOOL *stop) {
+    view.translatesAutoresizingMaskIntoConstraints = NO;
   }];
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[collectionView]-[gasValueLabel][thermometer]-[bankView]-|" options:0 metrics:nil views:viewsDict]];
