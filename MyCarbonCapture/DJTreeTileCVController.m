@@ -78,7 +78,7 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   [super viewDidAppear:animated];
   [self.collectionViewLayout invalidateLayout];
   [DJWifiUsageModel sharedInstance];
-  _incompletCells = [[NSUserDefaults standardUserDefaults] objectForKey:INCOMPLETE_CELLS_KEY];
+  _incompletCells = [[[NSUserDefaults standardUserDefaults] objectForKey:INCOMPLETE_CELLS_KEY] mutableCopy];
   NSLog(@"Incimplete Cells is %@",_incompletCells);
   _treeGrowth = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_TREE_PROGRESS_KEY];
   if (!_incompletCells) {
