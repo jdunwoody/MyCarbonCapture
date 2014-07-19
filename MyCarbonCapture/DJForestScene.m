@@ -18,36 +18,37 @@
 @implementation DJForestScene
 
 -(void)didMoveToView:(SKView *)view{
-  SKSpriteNode * baseView = [SKSpriteNode spriteNodeWithImageNamed:@"Base3" ];
+  NSString *whichColour = @"colour"/*@"grey"*/;
+  SKSpriteNode * baseView = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"MCC-%@-hill-base",whichColour]];
   [baseView setAnchorPoint:CGPointMake(0, 0)];
   [self addChild:baseView];
   baseView.position = CGPointMake(0, 0);
 
-  SKSpriteNode * hill1 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill1-2" ];
+  SKSpriteNode * hill1 = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"MCC-%@-hill-1",whichColour] ];
   [hill1 setAnchorPoint:CGPointMake(0, 0)];
   [self addChild:hill1];
-  hill1.position = CGPointMake(0, 82);
+  hill1.position = CGPointMake(0, 85);
 
-  SKSpriteNode * hill2 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill2-2" ];
+  SKSpriteNode * hill2 = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"MCC-%@-hill-2",whichColour] ];
   [hill2 setAnchorPoint:CGPointMake(0, 0)];
   [self addChild:hill2];
-  hill2.position = CGPointMake(0, 83+50);
+  hill2.position = CGPointMake(0, 85+50);
 
-  SKSpriteNode * hill3 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill3-2" ];
+  SKSpriteNode * hill3 = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"MCC-%@-hill-3",whichColour] ];
   [hill3 setAnchorPoint:CGPointMake(0, 0)];
   [self addChild:hill3];
-  hill3.position = CGPointMake(0, 83+50+105);
+  hill3.position = CGPointMake(0, 85+50+85);
 
-  SKSpriteNode * hill4 = [SKSpriteNode spriteNodeWithImageNamed:@"Hill4-2" ];
+  SKSpriteNode * hill4 = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"MCC-%@-hill-4",whichColour] ];
   [hill4 setAnchorPoint:CGPointMake(0, 0)];
   [self addChild:hill4];
-  hill4.position = CGPointMake(0, 83+50+106+58);
+  hill4.position = CGPointMake(0, 85+50+85+58);
 
 
-  SKSpriteNode * sky = [SKSpriteNode spriteNodeWithImageNamed:@"Skytint2"];
-  [sky setAnchorPoint:CGPointMake(0, 0)];
-  [self addChild:sky];
-  sky.position = CGPointMake(0, 83+50+106+58+28);
+  SKSpriteNode * sun = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"MCC-%@-landscape-sun",whichColour]];
+  [sun setAnchorPoint:CGPointMake(0, 0)];
+  [self addChild:sun];
+  sun.position = CGPointMake(230, 85+50+85+58+170);
 
 
 
