@@ -1,0 +1,13 @@
+PODS:
+  - Kiwi (2.3.0)
+  - Masonry (0.4.0)
+
+DEPENDENCIES:
+  - Kiwi
+  - Masonry
+
+SPEC CHECKSUMS:
+  Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
+  Masonry: 392466f4090cb28cc5349adec067453463e2ecd9
+
+COCOAPODS: 0.33.1

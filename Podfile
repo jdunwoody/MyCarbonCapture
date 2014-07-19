@@ -5,5 +5,5 @@ pod 'Masonry'
 
 
 target :MyCarbonCaptureTests, :exclusive => true do
-  pod 'Kiwi/XCTest'
+  pod 'Kiwi'
 end
