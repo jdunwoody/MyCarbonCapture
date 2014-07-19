@@ -51,32 +51,11 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   return self;
 }
 
--(void)resetCells{
-  [self.frc.fetchedObjects enumerateObjectsUsingBlock:^(Tile* tile, NSUInteger idx, BOOL *stop) {
-    tile.alpha = 0.1;
-    NSLog(@"The index being inserted is %lu",(unsigned long)idx);
-    [_incompletCells addObject:@(idx)];
-  }];
-  [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
-
-  [self.collectionView reloadData];
-}
-
 - (void)viewDidLoad
 {
   [super viewDidLoad];
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:CellIdentifier];
-
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleDefault;
-}
-
--(void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  [self.collectionViewLayout invalidateLayout];
   [DJWifiUsageModel sharedInstance];
   _incompletCells = [[[NSUserDefaults standardUserDefaults] objectForKey:INCOMPLETE_CELLS_KEY] mutableCopy];
   NSLog(@"Incimplete Cells is %@",_incompletCells);
@@ -86,10 +65,19 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     [self seedTiles];
 
     _incompletCells = [NSMutableArray array];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [self resetCells];
-    });
   }
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleDefault;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  [self.collectionViewLayout invalidateLayout];
+
+  //[self resetCells];
+
   //  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
   //    self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
   //    [self.webCheckTimer fire];
@@ -142,10 +130,10 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   NSUInteger randNumber = arc4random_uniform((UInt32)[self.incompletCells count]);
   NSIndexPath *pickedPath = [NSIndexPath indexPathForItem:[self.incompletCells[randNumber] intValue] inSection:0];
 
-  if ( self.leavesLayout.highlightledIndexPath && [self.leavesLayout.highlightledIndexPath isEqual:pickedPath]) {
-    [self incrementWebUsageWithUsage:self.currWebUsage];
-    return;
-  }
+//  if ( self.leavesLayout.highlightledIndexPath && [self.leavesLayout.highlightledIndexPath isEqual:pickedPath]) {
+//    [self incrementWebUsageWithUsage:self.currWebUsage];
+//    return;
+//  }
 
   Tile *tile = (Tile*)[self.frc objectAtIndexPath:pickedPath];
 
@@ -158,6 +146,19 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
     [self.collectionView.collectionViewLayout invalidateLayout];
   }
 }
+
+-(void)resetCells{
+  NSMutableArray *tilesDataSource = [NSMutableArray array];
+
+  [self.frc.fetchedObjects enumerateObjectsUsingBlock:^(Tile* tile, NSUInteger idx, BOOL *stop) {
+    tile.alpha = 0.1;
+    NSLog(@"The index being inserted is %lu",(unsigned long)idx);
+    [_incompletCells addObject:@(idx)];
+  }];
+  [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
+}
+
+
 
 #pragma mark - UICollectionview methods
 
@@ -276,9 +277,7 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
   return _frc;
 }
--(void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
-}
-
+*/
 
 -(void)seedTiles {
   NSError *error = nil;
