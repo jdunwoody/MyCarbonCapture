@@ -42,15 +42,12 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   _tileViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
   self.title = @"MyCarbonCapture";
 
-  /*
-   _donateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 50, 200, 50)];
-   [_donateButton setTitle:@"Donate Here" forState:UIControlStateNormal];
-   [_donateButton setTitleColor:[UIColor colorWithRed:0 green:.47 blue:.2 alpha:1] forState:UIControlStateNormal];
-   _donateButton.alpha = 0.0f;
-   _donateButton.titleLabel.font = [_donateButton.titleLabel.font fontWithSize:40];
-   [_donateButton addTarget:self action:@selector(donateNow) forControlEvents:UIControlEventTouchUpInside];
-   _donateButton.translatesAutoresizingMaskIntoConstraints = NO;
-   */
+
+  _donateButton = [[UIButton alloc] initWithFrame:CGRectZero];
+  [_donateButton setImage:[UIImage imageNamed:@"Donate-now-button"] forState:UIControlStateNormal];
+  [_donateButton addTarget:self action:@selector(donateNow) forControlEvents:UIControlEventTouchUpInside];
+  _donateButton.translatesAutoresizingMaskIntoConstraints = NO;
+
 
   [self addChildViewController:self.tileViewController];
   [self.view addSubview:self.tileViewController.view];
@@ -98,7 +95,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 -(void)updateViewConstraints{
   NSDictionary *viewsDict = @{@"collectionView": self.tileViewController.view,
                               @"menuBar":self.topLayoutGuide,
-                              // @"donateButton":_donateButton,
+                              @"donateButton":self.donateButton,
                               @"bankView": self.bankViewController.view,
                               @"gasLabel":self.gasLabel,
                               @"gasValueLabel":self.gasValueLabel,
@@ -110,13 +107,14 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
     view.translatesAutoresizingMaskIntoConstraints = NO;
   }];
 
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[collectionView]-[gasValueLabel][thermometer]-[bankView]-|" options:0 metrics:nil views:viewsDict]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[collectionView]-[gasValueLabel][thermometer]-[bankView][donateButton]-|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[gasLabel][gasValueLabel]" options:NSLayoutFormatAlignAllCenterY metrics:0 views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[thermometer]|" options:0 metrics:nil views:viewsDict]];
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bankView][flipButton]-|" options:0 metrics:nil views:viewsDict]];
 
-  //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[donateButton]-20-|" options:0 metrics:nil views:viewsDict]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[donateButton]" options:0 metrics:nil views:viewsDict]];
+
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewsDict]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[flipButton]-|"options:0 metrics:nil views:viewsDict]];
   [super updateViewConstraints];
@@ -125,7 +123,6 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
 #pragma mark - TileViewCollectionViewDelegates
 -(void)didIncreaseUsageStats:(long long)kilobytes {
-  self.donateButton.alpha +=.01;
 
   if (!byteFormatter) {
     byteFormatter = [[NSByteCountFormatter alloc] init];
@@ -146,7 +143,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
   [self addNewTree];
   [self.bankViewController refreshBankViewCollection];
   //self.thermometerGrowth += 1;
-//  [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithFloat:self.thermometerGrowth] forKey:THERMOMETER_GROWTH_KEY];
+  //  [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithFloat:self.thermometerGrowth] forKey:THERMOMETER_GROWTH_KEY];
 }
 
 -(void)didResetStats{
