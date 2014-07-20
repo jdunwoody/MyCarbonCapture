@@ -35,7 +35,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
 -(void)viewDidLoad {
 
-  _tileViewController = [[DJTreeTileCVController alloc] initWithManagedObjectContext:self.moc];
+  _tileViewController = [[DJTreeTileCVController alloc] init];
   _tileViewController.delegate = self;
 
   [self.view addSubview:self.tileViewController.view];
@@ -142,8 +142,8 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 -(void)didCompleteTree {
   [self addNewTree];
   [self.bankViewController refreshBankViewCollection];
-  //self.thermometerGrowth += 1;
-  //  [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithFloat:self.thermometerGrowth] forKey:THERMOMETER_GROWTH_KEY];
+  self.thermometerGrowth += 1;
+  // [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithFloat:self.thermometerGrowth] forKey:THERMOMETER_GROWTH_KEY];
 }
 
 -(void)didResetStats{
@@ -164,7 +164,7 @@ static NSString *WITH_ONE_SEED_URL = @"http://withoneseed.org.au/donate";
 
 #pragma - Tree Management
 -(void)addNewTree {
-  unsigned ranNum = arc4random_uniform(4);
+  unsigned ranNum = arc4random_uniform(4) + 1;
   NSError *error = nil;
   Tree * tree = [NSEntityDescription insertNewObjectForEntityForName:TREE_IDENTITY inManagedObjectContext:self.moc];
   NSString * selectName = [NSString stringWithFormat:@"TreeSelect%d",ranNum];

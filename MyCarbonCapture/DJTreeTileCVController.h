@@ -16,7 +16,7 @@
 
 @end
 
-#define INCOMPLETE_CELLS_KEY @"InCompleteCells"
+#define TILES_ALPHA_KEY @"TileAlphas"
 
 
 @interface DJTreeTileCVController : UICollectionViewController
@@ -24,10 +24,5 @@
 @property (nonatomic,strong) NSManagedObjectContext * moc;
 
 -(void)incrementWebUsageWithUsage:(long)usage;
-
-//initializer
-
--(id)initWithManagedObjectContext:(NSManagedObjectContext*)moc;
-
 
 @end

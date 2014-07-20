@@ -14,17 +14,15 @@
 
 #define TILE_IDENTITY @"Tile"
 
-
-
-@interface DJTreeTileCVController () <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UICollectionViewDataSource,LeavesCollectionViewDelegateFlowLayout>
-@property (nonatomic, strong) NSMutableArray *incompletCells;
+@interface DJTreeTileCVController () <UIAlertViewDelegate, UICollectionViewDataSource,LeavesCollectionViewDelegateFlowLayout>
+@property (nonatomic, readonly) NSArray *stillGrowingCells;
 @property (nonatomic) unsigned numCells;
 @property (nonatomic, strong) NSTimer *webCheckTimer;
 @property (nonatomic) long currWebUsage;
 @property (nonatomic) NSUInteger currentTreeGrowth;
 @property (nonatomic, strong) DJLeavesCollectionViewLayout *leavesLayout;
 @property (nonatomic,strong) DJFactShareViewController *factViewController;
-@property (nonatomic, strong) NSFetchedResultsController *frc;
+@property (nonatomic,strong) NSMutableArray *tiles;
 @property (nonatomic) float treeGrowth;
 @end
 
@@ -40,10 +38,9 @@ static NSString * CURRENT_TREE_PROGRESS_KEY = @"CurrentTreeProgress";
  */
 static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
--(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc{
+-(id)init{
   self = [super initWithCollectionViewLayout:[[DJLeavesCollectionViewLayout alloc] init]];
   if (self) {
-    self.moc = moc;
     self.leavesLayout = (DJLeavesCollectionViewLayout*)self.collectionViewLayout;
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor whiteColor];
@@ -57,36 +54,31 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:CellIdentifier];
   [DJWifiUsageModel sharedInstance];
-  _incompletCells = [[[NSUserDefaults standardUserDefaults] objectForKey:INCOMPLETE_CELLS_KEY] mutableCopy];
-  NSLog(@"Incimplete Cells is %@",_incompletCells);
-  _treeGrowth = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_TREE_PROGRESS_KEY];
-  if (!_incompletCells) {
-    NSLog(@"Creating the Incimplete Cells is %@",_incompletCells);
-    [self seedTiles];
-
-    _incompletCells = [NSMutableArray array];
-  }
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleDefault;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+  self.tiles = [[[NSUserDefaults standardUserDefaults] objectForKey:TILES_ALPHA_KEY] mutableCopy];
+  _treeGrowth = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_TREE_PROGRESS_KEY];
+  if (!self.tiles) {
+    NSLog(@"Creating the Incimplete Cells is %@",self.tiles);
+    [self seedTiles];
+  }
+
+}
+
 -(void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self.collectionViewLayout invalidateLayout];
-
-  //[self resetCells];
-
-  //  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-  //    self.webCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(checkDataUsage) userInfo:nil repeats:YES];
-  //    [self.webCheckTimer fire];
-  //  });
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
   [self.webCheckTimer invalidate];
+  [[NSUserDefaults standardUserDefaults] setObject:self.tiles forKey:TILES_ALPHA_KEY];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void)checkDataUsage{
@@ -98,14 +90,26 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   }
 }
 
+
+-(NSArray *)stillGrowingCells{
+  NSMutableArray *growing = [NSMutableArray array];
+  [self.tiles enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx, BOOL *stop) {
+    if (obj.floatValue < 1) {
+      [growing addObject:@(idx)];
+    }
+  }];
+  return growing;
+}
+
+
 -(void)incrementWebUsageWithUsage:(long)usage{
-  if ([self.incompletCells count] > 0) {
+  if ([self.stillGrowingCells count] > 0) {
     [self growTree];
     [self.delegate didIncreaseUsageStats:usage];
   } else {
     NSLog(@"this is the end of the tree growth");
     [self.delegate didCompleteTree];
-    [self resetCells];
+    [self seedTiles];
     self.treeGrowth = 0;
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:CURRENT_TREE_PROGRESS_KEY];
 
@@ -121,49 +125,33 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   [self.delegate treeDidGrowToAmount:amount];
   if (amount > 1) {
     self.treeGrowth = 0;
-    [self.incompletCells removeAllObjects];
   }
 
 }
 
 -(void)growTree{
-  NSUInteger randNumber = arc4random_uniform((UInt32)[self.incompletCells count]);
-  NSIndexPath *pickedPath = [NSIndexPath indexPathForItem:[self.incompletCells[randNumber] intValue] inSection:0];
+  NSUInteger randNumber = arc4random_uniform((UInt32)[self.stillGrowingCells count]);
+  NSUInteger pickedIndex = [self.stillGrowingCells[randNumber] unsignedIntegerValue];
 
-//  if ( self.leavesLayout.highlightledIndexPath && [self.leavesLayout.highlightledIndexPath isEqual:pickedPath]) {
-//    [self incrementWebUsageWithUsage:self.currWebUsage];
-//    return;
-//  }
+  //  if ( self.leavesLayout.highlightledIndexPath && [self.leavesLayout.highlightledIndexPath isEqual:pickedPath]) {
+  //    [self incrementWebUsageWithUsage:self.currWebUsage];
+  //    return;
+  //  }
 
-  Tile *tile = (Tile*)[self.frc objectAtIndexPath:pickedPath];
-
-  if (tile.alpha >= 1) {
-    [self.incompletCells removeObjectAtIndex:randNumber];
-    [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
+  float alpha = [self.tiles[pickedIndex] floatValue];
+  if (alpha >= 1) {
     [self incrementWebUsageWithUsage:self.currWebUsage];
   } else {
-    tile.alpha = tile.alpha + .1;
+    self.tiles[pickedIndex] =  @([self.tiles[pickedIndex] floatValue] + 0.1);
+    //tile.alpha = tile.alpha + .1;
     [self.collectionView.collectionViewLayout invalidateLayout];
   }
 }
 
--(void)resetCells{
-  NSMutableArray *tilesDataSource = [NSMutableArray array];
-
-  [self.frc.fetchedObjects enumerateObjectsUsingBlock:^(Tile* tile, NSUInteger idx, BOOL *stop) {
-    tile.alpha = 0.1;
-    NSLog(@"The index being inserted is %lu",(unsigned long)idx);
-    [_incompletCells addObject:@(idx)];
-  }];
-  [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
-}
-
-
-
 #pragma mark - UICollectionview methods
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return [self.frc.fetchedObjects count];
+  return [self.tiles count];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -184,8 +172,6 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
 
 -(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
   [self.webCheckTimer invalidate];
-
-  [(Tile*)[self.frc objectAtIndexPath:indexPath] setAlpha:1];
 
   self.leavesLayout.highlightledIndexPath = indexPath;
   UICollectionViewLayoutAttributes *attr = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
@@ -253,62 +239,23 @@ static int ANIMATION_STEP_THRESHOLD = 91; // should be 91;
   self.factViewController = [DJFactShareViewController withMessage:msgString];
 }
 
-#pragma mark - CoreData elements
-
--(NSFetchedResultsController *)frc {
-  if (_frc) return _frc;
-
-  NSError * error = nil;
-  NSFetchRequest * req = [NSFetchRequest fetchRequestWithEntityName:TILE_IDENTITY];
-  //req.predicate = [NSPredicate predicateWithFormat:@"useIdentifier ==  %d",TreeStorageUsageTypeBank];
-  if (error) {
-    NSLog(@"Error creating a new tile Storage and NSFetched Results Controller: %@",error);
-  }
-  req.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
-  _frc = [[NSFetchedResultsController alloc] initWithFetchRequest:req
-                                             managedObjectContext:self.moc
-                                               sectionNameKeyPath:nil
-                                                        cacheName:nil];
-  _frc.delegate = self;
-
-  if (![_frc performFetch:&error]) {
-    abort();
-  }
-
-  return _frc;
-}
-*/
-
 -(void)seedTiles {
-  NSError *error = nil;
-  Tile * tile = nil;
+  self.tiles = [NSMutableArray array];
   for (int i = 0; i < NUM_CELLs; i++) {
-    tile = [NSEntityDescription insertNewObjectForEntityForName:@"Tile" inManagedObjectContext:self.moc];
-    tile.index = i;
-    tile.alpha = 0.1;
-    [_incompletCells addObject:@(i)];
-
+    [self.tiles addObject:@(0.1)];
   }
-  [[NSUserDefaults standardUserDefaults] setObject:_incompletCells forKey:INCOMPLETE_CELLS_KEY];
-
-  [self.moc save:&error];
-  if (error)
-    NSLog(@"The found error is %@",error);
-  [self.collectionView reloadData];
 }
 
--(void)refreshTileViewCollection {
-  NSError * error = nil;
-  [self.frc performFetch:&error];
-  [self.collectionView reloadData];
-
-}
-
+//-(void)refreshTileViewCollection {
+//  NSError * error = nil;
+//  [self.frc performFetch:&error];
+//  [self.collectionView reloadData];
+//
+//}
 
 #pragma mark - Alpha for cell
 -(float)alphaForCellAtIndexPath:(NSIndexPath *)indexPath{
-  return [(Tile*)[self.frc objectAtIndexPath:indexPath] alpha];
-  
+  return [self.tiles[indexPath.row] floatValue];
 }
 
 
